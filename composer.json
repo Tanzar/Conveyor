@@ -1,0 +1,37 @@
+{
+    "name": "tanzar/conveyor",
+    "description": "tmp",
+    "type": "library",
+    "license": "MIT",
+    "version": "0.1.0",
+    "authors": [
+        {
+            "name": "Grzegorz Spakowski",
+            "email": "spakowski19@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Tanzar\\Conveyor\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tanzar\\Conveyor\\Tests\\": "tests"
+        }
+    },
+    "require-dev": {
+        "orchestra/testbench": "^9.0",
+        "phpunit/phpunit": "^11.3"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Tanzar\\Conveyor\\ConveyorServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    }
+}
