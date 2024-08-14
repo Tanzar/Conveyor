@@ -1,0 +1,1 @@
+[PH] Initial concept - create library for laravel to proecess models to formatted json object containing statistics which can be used to display tables / charts etc.
