@@ -10,7 +10,9 @@ class TestCase extends TestbenchTestCase
     public function setUp(): void
     {
         parent::setUp();
-        // additional setup
+        
+        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+        $this->artisan('migrate', ['--database' => 'testbench'])->run();
     }
   
     protected function getPackageProviders($app)
@@ -22,6 +24,12 @@ class TestCase extends TestbenchTestCase
   
     protected function getEnvironmentSetUp($app)
     {
-        // perform environment setup
+        // Setup default database to use sqlite :memory:
+        $app['config']->set('database.default', 'testbench');
+        $app['config']->set('database.connections.testbench', [
+            'driver'   => 'sqlite',
+            'database' => ':memory:',
+            'prefix'   => '',
+        ]);
     }
 }
