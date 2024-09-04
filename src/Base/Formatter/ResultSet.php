@@ -7,5 +7,7 @@ use Tanzar\Conveyor\Base\Cells\DataCell;
 abstract class ResultSet
 {
 
-    abstract public function get(string... $keys): DataCell;
+    abstract public function get(string... $keys): ?DataCell;
+
+    
 }

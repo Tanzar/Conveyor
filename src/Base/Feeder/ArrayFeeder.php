@@ -4,7 +4,7 @@ namespace Tanzar\Conveyor\Base\Feeder;
 
 use Illuminate\Support\Collection;
 
-class ArrayFeeder implements Feeder
+final class ArrayFeeder implements Feeder
 {
     public function __construct(
         private array|Collection $items

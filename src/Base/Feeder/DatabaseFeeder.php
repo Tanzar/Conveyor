@@ -5,7 +5,7 @@ namespace Tanzar\Conveyor\Base\Feeder;
 use Illuminate\Database\Eloquent\Builder as Eloquent;
 use \Illuminate\Database\Query\Builder as DB;
 
-class DatabaseFeeder implements Feeder
+final class DatabaseFeeder implements Feeder
 {
     public function __construct(
         private Eloquent|DB $query,
