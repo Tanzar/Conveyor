@@ -3,9 +3,9 @@
 namespace Tanzar\Conveyor\Base\Cells;
 
 use Closure;
+use Tanzar\Conveyor\Base\Conveyor\Conveyor;
 use Tanzar\Conveyor\Base\Exceptions\CellLockedException;
 use Tanzar\Conveyor\Base\Exceptions\CellValueException;
-use Tanzar\Conveyor\Base\Formatter\ResultSet;
 
 /**
  * Cell allows to automatically calculate resulting value
@@ -16,7 +16,7 @@ final class ReactiveCell extends DataCell
     private bool $locked = false;
 
     public function __construct(
-        private ResultSet $resultSet,
+        private Conveyor $conveyor,
         private Closure $recalculate
     ) {
 
@@ -35,7 +35,7 @@ final class ReactiveCell extends DataCell
         }
         $this->locked = true;
         $recalculate = $this->recalculate;
-        $value = $recalculate($this->resultSet);
+        $value = $recalculate($this->conveyor);
         if (
             !is_int($value) &&
             !is_float($value) &&

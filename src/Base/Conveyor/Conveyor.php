@@ -2,10 +2,17 @@
 
 namespace Tanzar\Conveyor\Base\Conveyor;
 
-use Tanzar\Conveyor\Base\Formatter\ResultSet;
+use Tanzar\Conveyor\Base\Cells\DataCells;
 
 abstract class Conveyor
 {
+    private DataCells $cells;
+
+    public function __construct()
+    {
+        $this->cells = new DataCells();
+    }
+
     final public function run(): array
     {
         $handler = new DataHandler();
@@ -16,7 +23,7 @@ abstract class Conveyor
         $handler->run();
         $this->after();
 
-        return $this->result()->format();
+        return $this->format();
     }
 
     abstract protected function configData(DataHandler $data): void;
@@ -28,5 +35,10 @@ abstract class Conveyor
 
     }
 
-    abstract protected function result(): ResultSet;
+    abstract protected function format(): array;
+
+    public function cells(): DataCells
+    {
+        return $this->cells;
+    }
 }

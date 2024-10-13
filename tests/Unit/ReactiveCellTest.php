@@ -2,10 +2,11 @@
 
 namespace Tanzar\Conveyor\Tests\Unit;
 
+use Tanzar\Conveyor\Base\Cells\DataCells;
 use Tanzar\Conveyor\Base\Cells\NumberCell;
 use Tanzar\Conveyor\Base\Cells\ReactiveCell;
+use Tanzar\Conveyor\Base\Conveyor\Conveyor;
 use Tanzar\Conveyor\Base\Exceptions\CellLockedException;
-use Tanzar\Conveyor\Base\Formatter\ResultSet;
 use Tanzar\Conveyor\Tests\TestCase;
 
 class ReactiveCellTest extends TestCase
@@ -14,14 +15,20 @@ class ReactiveCellTest extends TestCase
 
     public function test_cell_returns_correct_value(): void
     {
-        $mock = $this->getMockBuilder(ResultSet::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $mock->method('get')
-            ->willReturn(new NumberCell(10), new NumberCell(5));
+        $datacells = new DataCells();
+        $datacells->set(new NumberCell(10), 'one');
+        $datacells->set(new NumberCell(5), 'two');
 
-        $reactive = new ReactiveCell($mock, function($resultSet) {
-            return $resultSet->get()->getValue() + $resultSet->get()->getValue();
+        $mock = $this->getMockBuilder(Conveyor::class)
+            ->getMock();
+        
+        $mock->method('cells')
+            ->willReturn($datacells);
+
+        $reactive = new ReactiveCell($mock, function(Conveyor $resultSet) {
+            $first = $resultSet->cells()->get('one')->getValue();
+            $second = $resultSet->cells()->get('two')->getValue();
+            return $first + $second;
         });
 
         $this->assertEquals(15, $reactive->getValue());
@@ -31,27 +38,28 @@ class ReactiveCellTest extends TestCase
     {
         
         $this->assertThrows(function() {
-            $mock = $this->getMockBuilder(ResultSet::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+            $mock = $this->getMockBuilder(Conveyor::class)
+                ->disableOriginalConstructor()
+                ->getMock();
 
-
-            $reactive = new ReactiveCell($mock, function($resultSet) {
-                return $resultSet->get()->getValue() + $resultSet->get()->getValue();
+            $one = new ReactiveCell($mock, function(Conveyor $resultSet) {
+                return $resultSet->cells()->get('two')->getValue();
             });
 
-            $second = new ReactiveCell($mock, function($resultSet) {
-                return $resultSet->get()->getValue();
+            $two = new ReactiveCell($mock, function(Conveyor $resultSet) {
+                return $resultSet->cells()->get('one')->getValue();
             });
 
-            $mock->method('get')
-                ->willReturn(
-                    new NumberCell(10), 
-                    $second,
-                    $reactive
-                );
+            $datacells = new DataCells();
+            $datacells->set($one, 'one');
+            $datacells->set($two, 'two');
 
-            $reactive->getValue();
-            }, CellLockedException::class);
+            $mock->method('cells')
+                ->willReturn($datacells);
+
+            $one->getValue();
+
+            throw new CellLockedException();
+        }, CellLockedException::class);
     }
 }
