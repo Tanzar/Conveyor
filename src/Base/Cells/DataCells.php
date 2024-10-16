@@ -33,4 +33,9 @@ class DataCells
         }
         return $cellKey;
     }
+
+    public function reset(): void
+    {
+        $this->cells = new Collection();
+    }
 }

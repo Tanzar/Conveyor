@@ -34,4 +34,11 @@ final class DataHandler
         }
     }
 
+    public function reset(): void
+    {
+        $this->feeders = new Collection();
+        $this->handles = new Collection();
+        $this->index = 0;
+    }
+
 }

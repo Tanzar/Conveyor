@@ -18,7 +18,7 @@ final class DatabaseFeeder implements Feeder
     public function each(callable $callable): void
     {
         $chunk = ($this->chunk > 0) ? $this->chunk : 1000;
-        $this->query->lazyById($chunk)
+        $this->query->lazyById($chunk, $this->idColumn)
             ->each($callable);
     }
 

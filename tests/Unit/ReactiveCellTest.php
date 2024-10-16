@@ -2,7 +2,6 @@
 
 namespace Tanzar\Conveyor\Tests\Unit;
 
-use Tanzar\Conveyor\Base\Cells\DataCells;
 use Tanzar\Conveyor\Base\Cells\NumberCell;
 use Tanzar\Conveyor\Base\Cells\ReactiveCell;
 use Tanzar\Conveyor\Base\Conveyor\Conveyor;
@@ -15,20 +14,11 @@ class ReactiveCellTest extends TestCase
 
     public function test_cell_returns_correct_value(): void
     {
-        $datacells = new DataCells();
-        $datacells->set(new NumberCell(10), 'one');
-        $datacells->set(new NumberCell(5), 'two');
+        $one = new NumberCell(10);
+        $two = new NumberCell(5);
 
-        $mock = $this->getMockBuilder(Conveyor::class)
-            ->getMock();
-        
-        $mock->method('cells')
-            ->willReturn($datacells);
-
-        $reactive = new ReactiveCell($mock, function(Conveyor $resultSet) {
-            $first = $resultSet->cells()->get('one')->getValue();
-            $second = $resultSet->cells()->get('two')->getValue();
-            return $first + $second;
+        $reactive = new ReactiveCell(function() use ($one, $two) {
+            return $one->getValue() + $two->getValue();
         });
 
         $this->assertEquals(15, $reactive->getValue());
@@ -38,24 +28,16 @@ class ReactiveCellTest extends TestCase
     {
         
         $this->assertThrows(function() {
-            $mock = $this->getMockBuilder(Conveyor::class)
-                ->disableOriginalConstructor()
-                ->getMock();
 
-            $one = new ReactiveCell($mock, function(Conveyor $resultSet) {
-                return $resultSet->cells()->get('two')->getValue();
+            $two = new NumberCell(10);
+
+            $one = new ReactiveCell(function() use (&$two)  {
+                return $two->getValue();
             });
 
-            $two = new ReactiveCell($mock, function(Conveyor $resultSet) {
-                return $resultSet->cells()->get('one')->getValue();
+            $two = new ReactiveCell(function() use ($one) {
+                return $one->getValue();
             });
-
-            $datacells = new DataCells();
-            $datacells->set($one, 'one');
-            $datacells->set($two, 'two');
-
-            $mock->method('cells')
-                ->willReturn($datacells);
 
             $one->getValue();
 

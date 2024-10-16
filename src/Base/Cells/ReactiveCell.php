@@ -16,7 +16,6 @@ final class ReactiveCell extends DataCell
     private bool $locked = false;
 
     public function __construct(
-        private Conveyor $conveyor,
         private Closure $recalculate
     ) {
 
@@ -35,7 +34,7 @@ final class ReactiveCell extends DataCell
         }
         $this->locked = true;
         $recalculate = $this->recalculate;
-        $value = $recalculate($this->conveyor);
+        $value = $recalculate();
         if (
             !is_int($value) &&
             !is_float($value) &&

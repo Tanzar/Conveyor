@@ -7,20 +7,23 @@ use Tanzar\Conveyor\Base\Cells\DataCells;
 abstract class Conveyor
 {
     private DataCells $cells;
+    private DataHandler $handler;
 
     public function __construct()
     {
         $this->cells = new DataCells();
+        $this->handler = new DataHandler();
     }
 
     final public function run(): array
     {
-        $handler = new DataHandler();
-        $this->configData($handler);
         $this->init();
+        $this->cells->reset();
+        $this->handler->reset();
+        $this->configData($this->handler);
 
 
-        $handler->run();
+        $this->handler->run();
         $this->after();
 
         return $this->format();
@@ -37,7 +40,7 @@ abstract class Conveyor
 
     abstract protected function format(): array;
 
-    public function cells(): DataCells
+    final protected function cells(): DataCells
     {
         return $this->cells;
     }
