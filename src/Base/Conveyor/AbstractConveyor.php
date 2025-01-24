@@ -4,7 +4,7 @@ namespace Tanzar\Conveyor\Base\Conveyor;
 
 use Tanzar\Conveyor\Base\Cells\DataCells;
 
-abstract class Conveyor
+abstract class AbstractConveyor
 {
     private DataCells $cells;
     private DataHandler $handler;
@@ -20,20 +20,20 @@ abstract class Conveyor
         $this->init();
         $this->cells->reset();
         $this->handler->reset();
-        $this->configData($this->handler);
+        $this->initHandler($this->handler);
 
 
         $this->handler->run();
-        $this->after();
+        $this->postProcessing();
 
         return $this->format();
     }
 
-    abstract protected function configData(DataHandler $data): void;
+    abstract protected function initHandler(DataHandler $handler): void;
 
     abstract protected function init(): void;
 
-    protected function after(): void
+    protected function postProcessing(): void
     {
 
     }

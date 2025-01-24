@@ -3,7 +3,6 @@
 namespace Tanzar\Conveyor\Base\Cells;
 
 use Closure;
-use Tanzar\Conveyor\Base\Conveyor\Conveyor;
 use Tanzar\Conveyor\Base\Exceptions\CellLockedException;
 use Tanzar\Conveyor\Base\Exceptions\CellValueException;
 
