@@ -1,6 +1,6 @@
 <?php
 
-namespace Tanzar\Conveyor\Base\Conveyor;
+namespace Tanzar\Conveyor\Base\Handler;
 
 use Illuminate\Support\Collection;
 use Tanzar\Conveyor\Base\Feeder\Feeder;

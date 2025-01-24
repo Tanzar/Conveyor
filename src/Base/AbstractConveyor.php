@@ -1,8 +1,9 @@
 <?php
 
-namespace Tanzar\Conveyor\Base\Conveyor;
+namespace Tanzar\Conveyor\Base;
 
 use Tanzar\Conveyor\Base\Cells\DataCells;
+use Tanzar\Conveyor\Base\Handler\DataHandler;
 
 abstract class AbstractConveyor
 {

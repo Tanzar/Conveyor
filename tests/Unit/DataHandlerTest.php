@@ -2,7 +2,7 @@
 
 namespace Tanzar\Conveyor\Tests\Unit;
 
-use Tanzar\Conveyor\Base\Conveyor\DataHandler;
+use Tanzar\Conveyor\Base\Handler\DataHandler;
 use Tanzar\Conveyor\Base\Feeder\ArrayFeeder;
 use Tanzar\Conveyor\Tests\TestCase;
 
