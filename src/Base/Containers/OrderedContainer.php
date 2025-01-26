@@ -91,6 +91,21 @@ final class OrderedContainer
         $this->order = $newOrder;
     }
 
+    /**
+     * Returns item for given key
+     * if key is not set returns null
+     * 
+     * @param string $key searched key
+     * @return mixed item assigned to key, null if key not found
+     */
+    public function get(string $key): mixed
+    {
+        if (isset($this->items[$key])) {
+            return $this->items[$key];
+        }
+        return null;
+    }
+
     public function toArray(): array
     {
         $result = [];
