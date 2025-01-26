@@ -18,7 +18,8 @@ abstract class AbstractConveyor
 
     final public function run(): array
     {
-        $this->init();
+        $this->setup();
+        $this->reset();
         $this->cells->reset();
         $this->handler->reset();
         $this->initHandler($this->handler);
@@ -30,9 +31,14 @@ abstract class AbstractConveyor
         return $this->format();
     }
 
-    abstract protected function initHandler(DataHandler $handler): void;
+    abstract protected function setup(): void;
 
-    abstract protected function init(): void;
+    protected function reset(): void
+    {
+
+    }
+
+    abstract protected function initHandler(DataHandler $handler): void;
 
     protected function postProcessing(): void
     {
