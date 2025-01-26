@@ -2,11 +2,19 @@
 
 namespace Tanzar\Conveyor\Base\Containers;
 
-class OrderedContainer
+final class OrderedContainer
 {
     private array $items = [];
     private array $order = [];
 
+    /**
+     * Adds item at the end of order list
+     * if item key is already defined it will be ignored
+     * 
+     * @param string $key item key used to refference item
+     * @param mixed $item value stored on list
+     * @return void
+     */
     public function add(string $key, mixed $item): void
     {
         if (isset($this->items[$key])) {
@@ -17,6 +25,16 @@ class OrderedContainer
         $this->order[] = $key;
     }
 
+    /**
+     * Adds item after given key
+     * if key is not found item will be added at the end of list
+     * if item key is already defined it will be ignored
+     * 
+     * @param string $key key name after which item will be added
+     * @param string $itemKey item key used to refference item
+     * @param mixed $item value stored on list
+     * @return void
+     */
     public function addAfter(string $key, string $itemKey, mixed $item): void
     {
         if (isset($this->items[$itemKey])) {
@@ -40,6 +58,16 @@ class OrderedContainer
         $this->order = $newOrder;
     }
 
+    /**
+     * Adds item before given key
+     * if key is not found item will be added at the end of list
+     * if item key is already defined it will be ignored
+     * 
+     * @param string $key key name before which item will be added
+     * @param string $itemKey item key used to refference item
+     * @param mixed $item value stored on list
+     * @return void
+     */
     public function addBefore(string $key, string $itemKey, mixed $item): void
     {
         if (isset($this->items[$itemKey])) {
