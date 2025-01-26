@@ -71,6 +71,11 @@ final class Rows
         return $this->items->get($key);
     }
 
+    public function isSet(string $key): bool
+    {
+        return $this->items->have($key);
+    }
+
     /**
      * calling handle on every row
      * by default ignores hidden rows

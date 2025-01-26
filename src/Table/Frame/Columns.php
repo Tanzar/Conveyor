@@ -71,6 +71,11 @@ class Columns
         return $this->items->get($key);
     }
 
+    public function isSet(string $key): bool
+    {
+        return $this->items->have($key);
+    }
+
     /**
      * calling handle on every column
      * by default ignores hidden column

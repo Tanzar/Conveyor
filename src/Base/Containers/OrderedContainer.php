@@ -106,6 +106,11 @@ final class OrderedContainer
         return null;
     }
 
+    public function have(string $key): bool
+    {
+        return isset($this->items[$key]);
+    }
+
     public function toArray(): array
     {
         $result = [];

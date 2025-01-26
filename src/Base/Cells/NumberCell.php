@@ -24,7 +24,7 @@ class NumberCell extends DataCell
      */
     public function change(float $value = 1): void
     {
-        $this->value + $value;
+        $this->value += $value;
     }
 
     /**
