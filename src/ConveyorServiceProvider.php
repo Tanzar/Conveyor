@@ -11,11 +11,11 @@ class ConveyorServiceProvider extends PackageServiceProvider
 
     public function configurePackage(Package $package): void
     {
-        $package
-            ->name('Conveyor')
+        $package->name('conveyor')
+            ->hasConfigFile()
             ->discoversMigrations()
             ->hasInstallCommand(function (InstallCommand $command) {
-                $command
+                $command->publishConfigFile()
                     ->publishMigrations()
                     ->askToRunMigrations();
             });

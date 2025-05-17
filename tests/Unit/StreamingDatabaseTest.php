@@ -13,8 +13,9 @@ class StreamingDatabaseTest extends TestCase
     {
         $stream = new ConveyorStream();
 
-        $stream->conveyor_class = 'test::class';
+        $stream->base_key = 'key';
         $stream->key = 'key_one';
+        $stream->params = [];
         $stream->current_state = [
             'headers' => [],
             'rows' => [],

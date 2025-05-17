@@ -13,8 +13,9 @@ class CreateConveyorStreams extends Migration
     {
         Schema::create('conveyor_streams', function (Blueprint $table) {
             $table->id();
-            $table->string('conveyor_class');
+            $table->string('base_key');
             $table->string('key')->unique();
+            $table->json('params');
             $table->json('current_state');
             $table->timestamps();
         });
