@@ -14,8 +14,8 @@ class CreateConveyorStreamModels extends Migration
         Schema::create('conveyor_stream_models', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('conveyor_stream_id');
-            $table->unsignedBigInteger('streamable_model_id');
-            $table->string('streamable_model_class');
+            $table->unsignedBigInteger('streamable_id');
+            $table->string('streamable_type');
             $table->json('current_state');
             $table->timestamps();
 

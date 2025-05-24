@@ -4,6 +4,7 @@ namespace Tanzar\Conveyor\Tests\Unit;
 
 use Tanzar\Conveyor\Models\ConveyorStreamModel;
 use Tanzar\Conveyor\Models\ConveyorStream;
+use Tanzar\Conveyor\Tests\Models\Tester;
 use Tanzar\Conveyor\Tests\TestCase;
 
 class StreamingDatabaseTest extends TestCase
@@ -26,16 +27,22 @@ class StreamingDatabaseTest extends TestCase
 
         $this->assertDatabaseCount('conveyor_streams', 1);
 
+        $testerModel = new Tester();
+        $testerModel->save();
+        
         $streamModel = new ConveyorStreamModel();
         $streamModel->conveyor_stream_id = $stream->id;
-        $streamModel->streamable_model_class = 'FakeClass::class';
-        $streamModel->streamable_model_id = 1;
         $streamModel->current_state = [
             'cells' => []
         ];
-        $streamModel->save();
+
+        $testerModel->conveyors()
+            ->save($streamModel);
 
         $this->assertDatabaseCount('conveyor_stream_models', 1);
+        $this->assertDatabaseHas('conveyor_stream_models', [
+            'streamable_type' => Tester::class
+        ]);
     }
 
 }

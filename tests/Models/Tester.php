@@ -3,9 +3,9 @@
 namespace Tanzar\Conveyor\Tests\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Tanzar\Conveyor\Stream\Model\StreamableModel;
 
-class Tester extends Model
+class Tester extends StreamableModel
 {
     use HasFactory;
 
