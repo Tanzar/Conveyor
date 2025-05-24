@@ -5,6 +5,7 @@ namespace Tanzar\Conveyor\Stream;
 
 use Illuminate\Database\Eloquent\Model;
 use Tanzar\Conveyor\Models\ConveyorStream;
+use Tanzar\Conveyor\Stream\Model\StreamableModel;
 use Tanzar\Conveyor\Stream\Params\StreamParams;
 use Tanzar\Conveyor\Stream\Params\StreamParamsConfig;
 
@@ -36,7 +37,7 @@ class StreamableConveyor
      * @param mixed $model - if model is null all models set in stream will be recalculated
      * @return bool information if stream was updated
      */
-    public function update(?Model $model): bool
+    public function update(?StreamableModel $model): bool
     {
         if ($model) {
             return $this->updateSingle($model);
@@ -44,7 +45,7 @@ class StreamableConveyor
         return false;
     }
 
-    private function updateSingle(Model $model): bool
+    private function updateSingle(StreamableModel $model): bool
     {
         return false;
     }
