@@ -3,30 +3,34 @@
 
 namespace Tanzar\Conveyor\Stream;
 
-use Illuminate\Database\Eloquent\Model;
 use Tanzar\Conveyor\Models\ConveyorStream;
 use Tanzar\Conveyor\Stream\Model\StreamableModel;
 use Tanzar\Conveyor\Stream\Params\StreamParams;
 use Tanzar\Conveyor\Stream\Params\StreamParamsConfig;
 
-class StreamableConveyor
+abstract class StreamableConveyor
 {
+    private ConveyorStream $stream;
+    private StreamConfig $config;
     private StreamParams $params;
     
-    public function __construct(
-        private ConveyorStream $stream
-    ) {
-
-
+    public function __construct(ConveyorStream $stream)
+    {
+        $this->stream = $stream;
         $this->params = new StreamParams($stream->params);
+
+        $this->config = new StreamConfig();
+        $this->setup($this->config);
     }
+
+    abstract protected function setup(StreamConfig $config): void;
 
     /**
      * Setup for params
      * Options set in resulting object will be used to generate streams with command
      * @return StreamParamsConfig
      */
-    public static function getParamsConfig(): StreamParamsConfig
+    public static function paramsConfig(): StreamParamsConfig
     {
         return new StreamParamsConfig([]);
     }
@@ -34,7 +38,7 @@ class StreamableConveyor
     /**
      * Update stream values
      * 
-     * @param mixed $model - if model is null all models set in stream will be recalculated
+     * @param StreamableModel $model - if model is null all models set in stream will be recalculated
      * @return bool information if stream was updated
      */
     public function update(?StreamableModel $model): bool
@@ -42,7 +46,7 @@ class StreamableConveyor
         if ($model) {
             return $this->updateSingle($model);
         }
-        return false;
+        return $this->updateAll();
     }
 
     private function updateSingle(StreamableModel $model): bool
