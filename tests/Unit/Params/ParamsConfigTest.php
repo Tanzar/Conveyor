@@ -1,6 +1,6 @@
 <?php
 
-namespace Tanzar\Conveyor\Tests\Unit\Stream;
+namespace Tanzar\Conveyor\Tests\Unit\Params;
 
 use Tanzar\Conveyor\Exceptions\IncorrectParamOptionsException;
 use Tanzar\Conveyor\Params\StreamParamsConfig;

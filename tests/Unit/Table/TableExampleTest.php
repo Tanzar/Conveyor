@@ -1,6 +1,6 @@
 <?php
 
-namespace Tanzar\Conveyor\Tests\Unit;
+namespace Tanzar\Conveyor\Tests\Unit\Table;
 
 use Tanzar\Conveyor\Tests\Classes\TableExample;
 use Tanzar\Conveyor\Tests\TestCase;

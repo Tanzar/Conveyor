@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Tanzar\Conveyor\Tests\Unit\Stream;
+namespace Tanzar\Conveyor\Tests\Unit\Params;
 
 use Illuminate\Support\Carbon;
 use Tanzar\Conveyor\Params\StreamParams;

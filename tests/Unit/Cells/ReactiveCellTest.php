@@ -1,6 +1,6 @@
 <?php
 
-namespace Tanzar\Conveyor\Tests\Unit;
+namespace Tanzar\Conveyor\Tests\Unit\Cells;
 
 use Tanzar\Conveyor\Cells\NumberCell;
 use Tanzar\Conveyor\Cells\ReactiveCell;
