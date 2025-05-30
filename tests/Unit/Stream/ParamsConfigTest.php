@@ -2,8 +2,8 @@
 
 namespace Tanzar\Conveyor\Tests\Unit\Stream;
 
-use Tanzar\Conveyor\Stream\Exceptions\IncorrectParamOptionsException;
-use Tanzar\Conveyor\Stream\Params\StreamParamsConfig;
+use Tanzar\Conveyor\Exceptions\IncorrectParamOptionsException;
+use Tanzar\Conveyor\Params\StreamParamsConfig;
 use Tanzar\Conveyor\Tests\TestCase;
 
 class ParamsConfigTest extends TestCase

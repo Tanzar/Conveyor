@@ -1,11 +1,11 @@
 <?php
 
 
-namespace Tanzar\Conveyor\Stream\Params;
+namespace Tanzar\Conveyor\Params;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
-use Tanzar\Conveyor\Stream\Exceptions\IncorrectParamOptionsException;
+use Tanzar\Conveyor\Exceptions\IncorrectParamOptionsException;
 
 class StreamParamsConfig
 {

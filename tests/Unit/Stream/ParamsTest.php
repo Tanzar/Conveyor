@@ -4,7 +4,7 @@
 namespace Tanzar\Conveyor\Tests\Unit\Stream;
 
 use Illuminate\Support\Carbon;
-use Tanzar\Conveyor\Stream\Params\StreamParams;
+use Tanzar\Conveyor\Params\StreamParams;
 use Tanzar\Conveyor\Tests\TestCase;
 
 class ParamsTest extends TestCase

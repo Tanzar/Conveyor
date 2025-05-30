@@ -3,7 +3,7 @@
 namespace Tanzar\Conveyor\Tests\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Tanzar\Conveyor\Stream\Model\StreamableModel;
+use Tanzar\Conveyor\Models\StreamableModel;
 
 class Tester extends StreamableModel
 {

@@ -3,8 +3,8 @@
 namespace Tanzar\Conveyor\Stream;
 
 use Illuminate\Support\Collection;
-use Tanzar\Conveyor\Stream\Exceptions\InvalidModelException;
-use Tanzar\Conveyor\Stream\Model\StreamableModel;
+use Tanzar\Conveyor\Exceptions\InvalidModelException;
+use Tanzar\Conveyor\Models\StreamableModel;
 
 class StreamConfig
 {

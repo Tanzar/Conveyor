@@ -1,11 +1,10 @@
 <?php
 
 
-namespace Tanzar\Conveyor\Stream\Model;
+namespace Tanzar\Conveyor\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Tanzar\Conveyor\Models\ConveyorStreamModel;
 
 abstract class StreamableModel extends Model
 {

@@ -2,7 +2,7 @@
 
 namespace Tanzar\Conveyor\Tests\Unit\Stream;
 
-use Tanzar\Conveyor\Stream\Exceptions\InvalidModelException;
+use Tanzar\Conveyor\Exceptions\InvalidModelException;
 use Tanzar\Conveyor\Stream\StreamConfig;
 use Tanzar\Conveyor\Tests\Models\Tester;
 use Tanzar\Conveyor\Tests\TestCase;

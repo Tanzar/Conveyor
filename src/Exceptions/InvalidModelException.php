@@ -1,6 +1,6 @@
 <?php
 
-namespace Tanzar\Conveyor\Stream\Exceptions;
+namespace Tanzar\Conveyor\Exceptions;
 
 use Exception;
 
