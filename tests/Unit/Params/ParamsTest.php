@@ -4,7 +4,7 @@
 namespace Tanzar\Conveyor\Tests\Unit\Params;
 
 use Illuminate\Support\Carbon;
-use Tanzar\Conveyor\Params\StreamParams;
+use Tanzar\Conveyor\Params\Params;
 use Tanzar\Conveyor\Tests\TestCase;
 
 class ParamsTest extends TestCase
@@ -17,7 +17,7 @@ class ParamsTest extends TestCase
             'date' => '2025-01-01 12:13:14'
         ];
 
-        $params = new StreamParams($values);
+        $params = new Params($values);
 
         $this->assertEquals(1, $params->int('int'));
         $this->assertEquals('Test string', $params->string('string'));
@@ -32,7 +32,7 @@ class ParamsTest extends TestCase
     {
         Carbon::setTestNow('2025-01-01 12:13:14');
 
-        $params = new StreamParams([]);
+        $params = new Params([]);
 
         $this->assertEquals(0, $params->int('int'));
         $this->assertEquals('', $params->string('string'));

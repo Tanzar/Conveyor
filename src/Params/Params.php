@@ -5,7 +5,7 @@ namespace Tanzar\Conveyor\Params;
 
 use Illuminate\Support\Carbon;
 
-class StreamParams
+final class Params
 {
 	public function __construct(private array $values)
     {

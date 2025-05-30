@@ -3,15 +3,15 @@
 namespace Tanzar\Conveyor\Tests\Unit\Params;
 
 use Tanzar\Conveyor\Exceptions\IncorrectParamOptionsException;
-use Tanzar\Conveyor\Params\StreamParamsConfig;
+use Tanzar\Conveyor\Params\OptionsInitializer;
 use Tanzar\Conveyor\Tests\TestCase;
 
-class ParamsConfigTest extends TestCase
+class OptionsInitializerTest extends TestCase
 {
 
     public function test_add_options(): void
     {
-        $config = new StreamParamsConfig([
+        $config = new OptionsInitializer([
             'user' => 'required|integer',
             'group' => 'required|integer'
         ]);
@@ -38,7 +38,7 @@ class ParamsConfigTest extends TestCase
     {
         $this->expectException(IncorrectParamOptionsException::class);
 
-        $config = new StreamParamsConfig([
+        $config = new OptionsInitializer([
             'user' => 'required|max:0',
         ]);
         
@@ -54,7 +54,7 @@ class ParamsConfigTest extends TestCase
 
     public function test_form_key(): void
     {
-        $key = StreamParamsConfig::formKey([
+        $key = OptionsInitializer::formKey([
             'user' => 1,
             'group' => 3
         ]);

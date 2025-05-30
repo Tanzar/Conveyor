@@ -7,7 +7,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Tanzar\Conveyor\Exceptions\IncorrectParamOptionsException;
 
-class StreamParamsConfig
+final class OptionsInitializer
 {
 	private array $options = [];
 
@@ -22,7 +22,7 @@ class StreamParamsConfig
      * @param array $option - values that match validator
      * @param bool $throwErrors - disable error throwing
      * @throws IncorrectParamOptionsException
-     * @return StreamParamsConfig
+     * @return OptionsInitializer
      */
     public function option(array $option, bool $throwErrors = true): self
     {
