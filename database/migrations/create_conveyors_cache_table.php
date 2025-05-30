@@ -11,7 +11,7 @@ class CreateConveyorStreams extends Migration
      */
     public function up(): void
     {
-        Schema::create('conveyor_streams', function (Blueprint $table) {
+        Schema::create('conveyors_cache', function (Blueprint $table) {
             $table->id();
             $table->string('base_key');
             $table->string('key')->unique();
@@ -26,6 +26,6 @@ class CreateConveyorStreams extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('conveyor_streams');
+        Schema::dropIfExists('conveyors_cache');
     }
 };

@@ -4,7 +4,7 @@ namespace Tanzar\Conveyor\Stream;
 
 use Illuminate\Support\Collection;
 use Tanzar\Conveyor\Exceptions\InvalidModelException;
-use Tanzar\Conveyor\Models\StreamableModel;
+use Tanzar\Conveyor\Models\ConveyorCacheableModel;
 
 class StreamConfig
 {
@@ -18,9 +18,9 @@ class StreamConfig
 
     public function add(string $model, callable $handler): self
     {
-        if (!is_subclass_of($model, StreamableModel::class)) {
+        if (!is_subclass_of($model, ConveyorCacheableModel::class)) {
             throw new InvalidModelException(
-                'Given model is not correct, make sure your model is extending ' . StreamableModel::class
+                'Given model is not correct, make sure your model is extending ' . ConveyorCacheableModel::class
             );
         }
 

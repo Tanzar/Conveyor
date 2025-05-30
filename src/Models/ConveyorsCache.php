@@ -14,8 +14,9 @@ use Illuminate\Support\Carbon;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
-class ConveyorStream extends Model
+final class ConveyorsCache extends Model
 {
+    protected string $table = 'conveyors_cache';
 
     protected function casts(): array
     {

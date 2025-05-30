@@ -11,15 +11,15 @@ class CreateConveyorStreamModels extends Migration
      */
     public function up(): void
     {
-        Schema::create('conveyor_stream_models', function (Blueprint $table) {
+        Schema::create('conveyors_models_cache', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('conveyor_stream_id');
-            $table->unsignedBigInteger('streamable_id');
-            $table->string('streamable_type');
+            $table->unsignedBigInteger('conveyor_id');
+            $table->unsignedBigInteger('model_id');
+            $table->string('model_type');
             $table->json('current_state');
             $table->timestamps();
 
-            $table->foreign('conveyor_stream_id')->references('id')->on('convayor_streams');
+            $table->foreign('conveyor_id')->references('id')->on('conveyors_cache');
         });
     }
 
@@ -28,6 +28,6 @@ class CreateConveyorStreamModels extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('conveyor_stream_models');
+        Schema::dropIfExists('conveyors_models_cache');
     }
 };

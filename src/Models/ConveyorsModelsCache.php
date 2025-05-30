@@ -8,15 +8,16 @@ use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
- * @property int $conveyor_stream_id
- * @property int $streamable_id
- * @property string $streamable_type
+ * @property int $conveyor_id
+ * @property int $model_id
+ * @property string $model_type
  * @property array $current_state
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
-class ConveyorStreamModel extends Model
+class ConveyorsModelsCache extends Model
 {
+    protected string $table = 'conveyors_models_cache';
     
     protected function casts(): array
     {
@@ -27,7 +28,7 @@ class ConveyorStreamModel extends Model
         ];
     }
 
-    public function streamable(): MorphTo
+    public function cacheable(): MorphTo
     {
         return $this->morphTo();
     }
