@@ -2,8 +2,8 @@
 
 namespace Tanzar\Conveyor\Table;
 
-use Tanzar\Conveyor\Base\AbstractConveyor;
-use Tanzar\Conveyor\Base\Cells\DataCell;
+use Tanzar\Conveyor\AbstractConveyor;
+use Tanzar\Conveyor\Cells\DataCell;
 use Tanzar\Conveyor\Table\Frame\Column;
 use Tanzar\Conveyor\Table\Frame\Columns;
 use Tanzar\Conveyor\Table\Frame\Row;

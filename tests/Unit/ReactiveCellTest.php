@@ -2,10 +2,9 @@
 
 namespace Tanzar\Conveyor\Tests\Unit;
 
-use Tanzar\Conveyor\Base\Cells\NumberCell;
-use Tanzar\Conveyor\Base\Cells\ReactiveCell;
-use Tanzar\Conveyor\Base\Conveyor\AbstractConveyor;
-use Tanzar\Conveyor\Base\Exceptions\CellLockedException;
+use Tanzar\Conveyor\Cells\NumberCell;
+use Tanzar\Conveyor\Cells\ReactiveCell;
+use Tanzar\Conveyor\Exceptions\CellLockedException;
 use Tanzar\Conveyor\Tests\TestCase;
 
 class ReactiveCellTest extends TestCase

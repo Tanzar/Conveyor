@@ -1,6 +1,6 @@
 <?php
 
-namespace Tanzar\Conveyor\Base\Containers;
+namespace Tanzar\Conveyor\Table\Frame;
 
 final class OrderedContainer
 {

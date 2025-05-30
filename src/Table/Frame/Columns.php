@@ -2,7 +2,6 @@
 
 namespace Tanzar\Conveyor\Table\Frame;
 
-use Tanzar\Conveyor\Base\Containers\OrderedContainer;
 
 class Columns
 {

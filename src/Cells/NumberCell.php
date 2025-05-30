@@ -1,6 +1,6 @@
 <?php
 
-namespace Tanzar\Conveyor\Base\Cells;
+namespace Tanzar\Conveyor\Cells;
 
 /**
  * Simple cell for holding numeric values

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tanzar\Conveyor\Base\Exceptions;
+namespace Tanzar\Conveyor\Exceptions;
 use Exception;
 
 class CellLockedException extends Exception

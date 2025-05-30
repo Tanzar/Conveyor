@@ -2,8 +2,6 @@
 
 namespace Tanzar\Conveyor\Table\Frame;
 
-use Tanzar\Conveyor\Base\Containers\OrderedContainer;
-
 final class Rows
 {
     private OrderedContainer $items;

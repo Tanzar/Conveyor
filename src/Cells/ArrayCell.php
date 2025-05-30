@@ -1,6 +1,6 @@
 <?php
 
-namespace Tanzar\Conveyor\Base\Cells;
+namespace Tanzar\Conveyor\Cells;
 
 /**
  * Cell type used when cell should hold multiple values

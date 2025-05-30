@@ -1,10 +1,10 @@
 <?php
 
-namespace Tanzar\Conveyor\Base\Cells;
+namespace Tanzar\Conveyor\Cells;
 
 use Closure;
-use Tanzar\Conveyor\Base\Exceptions\CellLockedException;
-use Tanzar\Conveyor\Base\Exceptions\CellValueException;
+use Tanzar\Conveyor\Exceptions\CellLockedException;
+use Tanzar\Conveyor\Exceptions\CellValueException;
 
 /**
  * Cell allows to automatically calculate resulting value

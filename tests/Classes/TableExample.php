@@ -2,12 +2,12 @@
 
 namespace Tanzar\Conveyor\Tests\Classes;
 
-use Tanzar\Conveyor\Base\Cells\NumberCell;
-use Tanzar\Conveyor\Base\Cells\ReactiveCell;
 use Tanzar\Conveyor\Base\Feeder\ArrayFeeder;
+use Tanzar\Conveyor\Cells\NumberCell;
+use Tanzar\Conveyor\Cells\ReactiveCell;
 use Tanzar\Conveyor\Table\Frame\Rows;
 use Tanzar\Conveyor\Table\Frame\Columns;
-use Tanzar\Conveyor\Base\Cells\DataCell;
+use Tanzar\Conveyor\Cells\DataCell;
 use Tanzar\Conveyor\Base\Handler\DataHandler;
 use Tanzar\Conveyor\Table\Table;
 

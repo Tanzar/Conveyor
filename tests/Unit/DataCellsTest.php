@@ -1,8 +1,8 @@
 <?php
 
 namespace Tanzar\Conveyor\Tests\Unit;
-use Tanzar\Conveyor\Base\Cells\DataCells;
-use Tanzar\Conveyor\Base\Cells\NumberCell;
+use Tanzar\Conveyor\Cells\DataCells;
+use Tanzar\Conveyor\Cells\NumberCell;
 use Tanzar\Conveyor\Tests\TestCase;
 
 class DataCellsTest extends TestCase
