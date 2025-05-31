@@ -16,7 +16,7 @@ use Illuminate\Support\Carbon;
  */
 final class ConveyorsCache extends Model
 {
-    protected string $table = 'conveyors_cache';
+    protected $table = 'conveyors_cache';
 
     protected function casts(): array
     {

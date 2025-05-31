@@ -13,10 +13,10 @@ class TestCase extends \Orchestra\Testbench\TestCase
     {
         parent::setUp();
 
-        include_once __DIR__ . '/../database/migrations/create_conveyor_streams_table.php';
+        include_once __DIR__ . '/../database/migrations/create_conveyors_cache_table.php';
         (new \CreateConveyorStreams())->up();
 
-        include_once __DIR__ . '/../database/migrations/create_conveyor_stream_models_table.php';
+        include_once __DIR__ . '/../database/migrations/create_conveyors_models_cache_table.php';
         (new CreateConveyorStreamModels())->up();
         
         $this->loadMigrationsFrom(__DIR__ . '/database/migrations');

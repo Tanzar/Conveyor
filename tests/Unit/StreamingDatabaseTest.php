@@ -25,7 +25,7 @@ class StreamingDatabaseTest extends TestCase
 
         $conveyor->save();
 
-        $this->assertDatabaseCount('conveyor_streams', 1);
+        $this->assertDatabaseCount('conveyors_cache', 1);
 
         $testerModel = new Tester();
         $testerModel->save();
@@ -39,9 +39,9 @@ class StreamingDatabaseTest extends TestCase
         $testerModel->cachedModelConveyors()
             ->save($streamModel);
 
-        $this->assertDatabaseCount('conveyor_stream_models', 1);
-        $this->assertDatabaseHas('conveyor_stream_models', [
-            'streamable_type' => Tester::class
+        $this->assertDatabaseCount('conveyors_models_cache', 1);
+        $this->assertDatabaseHas('conveyors_models_cache', [
+            'model_type' => Tester::class
         ]);
     }
 

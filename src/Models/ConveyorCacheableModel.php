@@ -11,6 +11,6 @@ abstract class ConveyorCacheableModel extends Model
 	
     final public function cachedModelConveyors(): MorphMany
     {
-        return $this->morphMany(ConveyorsModelsCache::class, 'cacheable');
+        return $this->morphMany(ConveyorsModelsCache::class, 'model');
     }
 }
