@@ -8,27 +8,25 @@ use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
- * @property int $conveyor_id
+ * @property int $conveyor_cell_id
  * @property int $model_id
  * @property string $model_type
- * @property array $current_state
+ * @property float $value
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
-class ConveyorsModelsCache extends Model
+class ConveyorCellModel extends Model
 {
-    protected $table = 'conveyors_models_cache';
     
     protected function casts(): array
     {
         return [
-            'current_state' => 'array',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
     }
 
-    public function cacheable(): MorphTo
+    public function model(): MorphTo
     {
         return $this->morphTo();
     }

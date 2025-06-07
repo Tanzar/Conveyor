@@ -3,6 +3,7 @@
 namespace Tanzar\Conveyor\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -10,21 +11,23 @@ use Illuminate\Support\Carbon;
  * @property string $base_key
  * @property string $key
  * @property array $params
- * @property array $current_state
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
-final class ConveyorsCache extends Model
+final class ConveyorFrame extends Model
 {
-    protected $table = 'conveyors_cache';
 
     protected function casts(): array
     {
         return [
-            'current_state' => 'array',
             'params' => 'array',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
+    }
+
+    public function cells(): HasMany
+    {
+        return $this->hasMany(ConveyorCell::class);
     }
 }

@@ -3,9 +3,9 @@
 namespace Tanzar\Conveyor\Tests\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Tanzar\Conveyor\Models\ConveyorCacheableModel;
+use Tanzar\Conveyor\Models\ConveyorModel;
 
-class Tester extends ConveyorCacheableModel
+class Tester extends ConveyorModel
 {
     use HasFactory;
 

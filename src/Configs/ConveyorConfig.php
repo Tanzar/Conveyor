@@ -2,9 +2,6 @@
 
 namespace Tanzar\Conveyor\Configs;
 
-use Tanzar\Conveyor\Exceptions\InvalidModelException;
-use Tanzar\Conveyor\Models\ConveyorCacheableModel;
-
 final class ConveyorConfig implements ConveyorConfigInterface
 {
     private array $models = [];

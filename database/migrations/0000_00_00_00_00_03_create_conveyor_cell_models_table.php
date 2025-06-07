@@ -4,22 +4,24 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateConveyorStreamModels extends Migration
+class CreateConveyorCellModels extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('conveyors_models_cache', function (Blueprint $table) {
+        Schema::create('conveyor_cell_models', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('conveyor_id');
+            $table->unsignedBigInteger('conveyor_cell_id');
             $table->unsignedBigInteger('model_id');
             $table->string('model_type');
-            $table->json('current_state');
+            $table->float('value');
             $table->timestamps();
 
-            $table->foreign('conveyor_id')->references('id')->on('conveyors_cache');
+            $table->foreign('conveyor_cell_id')
+                ->references('id')
+                ->on('conveyor_cells');
         });
     }
 
@@ -28,6 +30,6 @@ class CreateConveyorStreamModels extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('conveyors_models_cache');
+        Schema::dropIfExists('conveyor_cell_models');
     }
 };
