@@ -7,12 +7,12 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Tanzar\Conveyor\Exceptions\IncorrectParamOptionsException;
 
-final class OptionsInitializer
+final class ParamsInitializer implements ParamsInitializerInterface
 {
 	private array $options = [];
 
     public function __construct(
-        private array $rules
+        private array $rules = []
     ) {
 
     }
@@ -20,34 +20,41 @@ final class OptionsInitializer
     /**
      * Add option what will generate stream when initiating
      * @param array $option - values that match validator
-     * @param bool $throwErrors - disable error throwing
-     * @throws IncorrectParamOptionsException
-     * @return OptionsInitializer
+     * @return ParamsInitializer
      */
-    public function option(array $option, bool $throwErrors = true): self
+    public function option(array $option): self
     {
-        $validator = Validator::make($option, $this->rules);
+        $values = $this->checkValidity($option);
+        $key = $this->formKey($values);
 
-        if ($validator->fails()) {
-            if ($throwErrors) {
-                throw new IncorrectParamOptionsException($validator);
-            }
-        } else {
-            $values = $validator->validated();
-            $key = self::formKey($values);
-
-            $this->options[$key] = $values;
-        }
+        $this->options[$key] = $values;
         
         return $this;
     }
     
     /**
+     * Check if given key value array is valid
+     * @param array $option 
+     * @throws IncorrectParamOptionsException
+     * @return array valid values
+     */
+    public function checkValidity(array $option): array
+    {
+        $validator = Validator::make($option, $this->rules);
+
+        if ($validator->fails()) {
+            throw new IncorrectParamOptionsException($validator);
+        }
+
+        return $validator->validated();
+    }
+
+    /**
      * Form key from params array
      * @param string[] $values
      * @return string
      */
-    public static function formKey(array $values): string
+    public function formKey(array $values): string
     {
         $text = '';
         foreach ($values as $key => $value) {
@@ -65,4 +72,5 @@ final class OptionsInitializer
             ->values()
             ->toArray();
     }
+
 }

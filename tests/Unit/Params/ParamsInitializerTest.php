@@ -3,15 +3,15 @@
 namespace Tanzar\Conveyor\Tests\Unit\Params;
 
 use Tanzar\Conveyor\Exceptions\IncorrectParamOptionsException;
-use Tanzar\Conveyor\Params\OptionsInitializer;
+use Tanzar\Conveyor\Params\ParamsInitializer;
 use Tanzar\Conveyor\Tests\TestCase;
 
-class OptionsInitializerTest extends TestCase
+class ParamsInitializerTest extends TestCase
 {
 
     public function test_add_options(): void
     {
-        $config = new OptionsInitializer([
+        $config = new ParamsInitializer([
             'user' => 'required|integer',
             'group' => 'required|integer'
         ]);
@@ -38,7 +38,7 @@ class OptionsInitializerTest extends TestCase
     {
         $this->expectException(IncorrectParamOptionsException::class);
 
-        $config = new OptionsInitializer([
+        $config = new ParamsInitializer([
             'user' => 'required|max:0',
         ]);
         
@@ -47,14 +47,16 @@ class OptionsInitializerTest extends TestCase
             'group' => 3
         ]);
 
-        $config->option([ 'user' => 'Admin' ], false);
+        $config->option([ 'user' => 'Admin' ]);
 
         $this->assertEquals([], $config->toArray());
     }
 
     public function test_form_key(): void
     {
-        $key = OptionsInitializer::formKey([
+        $initializer = new ParamsInitializer();
+
+        $key = $initializer->formKey([
             'user' => 1,
             'group' => 3
         ]);
