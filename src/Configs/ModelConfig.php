@@ -24,6 +24,13 @@ class ModelConfig implements ModelConfigInterface
         }
     }
 
+    /**
+     * Add handler to manage model when updating conveyor
+     * $handler needs one parameter with model class typehint
+     * @param callable $handler function called to manage model when updating conveyor
+     * @throws InvalidHandlerException
+     * @return ModelConfigInterface
+     */
     public function handler(callable $handler): ModelConfigInterface
     {
         $message = $this->checkHandlerFunction($handler);
@@ -48,6 +55,15 @@ class ModelConfig implements ModelConfigInterface
         return null;
     }
     
+    /**
+     * Add query to retrieve models when recalculating or initializing conveyor
+     * $build uses 2 parameters:
+     *  1) Laravels query builder
+     *  2) Tanzar\Conveyor\Params\Params, which will be passed into method by convayor to use parameters for specified conveyor
+     * @param callable $build - function called to build query
+     * @throws InvalidBuildFunctionException
+     * @return ModelConfigInterface
+     */
     public function query(callable $build): ModelConfigInterface
     {
         $message = $this->checkBuildFunction($build);
@@ -81,6 +97,11 @@ class ModelConfig implements ModelConfigInterface
         return null;
     }
 
+    /**
+     * Name of id column used by model
+     * @param string $column
+     * @return ModelConfigInterface
+     */
     public function idColumn(string $column): ModelConfigInterface
     {
         $this->idColumn = $column;
