@@ -3,7 +3,6 @@
 namespace Tanzar\Conveyor\Tests\Database\Unit;
 
 use Tanzar\Conveyor\Models\ConveyorCell;
-use Tanzar\Conveyor\Models\ConveyorCellModel;
 use Tanzar\Conveyor\Models\ConveyorFrame;
 use Tanzar\Conveyor\Tests\Models\Tester;
 use Tanzar\Conveyor\Tests\TestCase;
@@ -26,18 +25,14 @@ class ConveyorModelsTest extends TestCase
         $cell->hidden = false;
         $cell->value = 10;
         $cell->options = [ 'marked' => false ];
+        $cell->models = [
+            Tester::class => [
+                1 => 2,
+                2 => 13,
+            ]
+        ];
 
         $conveyor->cells()->save($cell);
-
-        $testerModel = new Tester();
-        $testerModel->save();
-
-        $cellModel = new ConveyorCellModel();
-        $cellModel->conveyor_cell_id = $cell->id;
-        $cellModel->value = 10;
-
-        $testerModel->conveyorsCells()
-            ->save($cellModel);
 
 
         $this->assertDatabaseHas(ConveyorFrame::class, [
@@ -45,19 +40,14 @@ class ConveyorModelsTest extends TestCase
             'key' => 'key_one'
         ]);
 
-        $this->assertDatabaseCount(Tester::class, 1);
-
         $this->assertDatabaseHas(ConveyorCell::class, [
             'key' => 'row.col',
             'hidden' => false,
             'value' => 10,
-            'options' => json_encode([ 'marked' => false ])
+            'options' => json_encode([ 'marked' => false ]),
+            'models' => json_encode([ Tester::class => [ 1 => 2, 2 => 13 ] ])
         ]);
 
-        $this->assertDatabaseHas(ConveyorCellModel::class, [
-            'model_type' => Tester::class,
-            'value' => 10,
-        ]);
     }
 
 }

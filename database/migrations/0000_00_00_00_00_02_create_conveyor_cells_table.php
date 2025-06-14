@@ -18,6 +18,7 @@ class CreateConveyorCells extends Migration
             $table->boolean('hidden');
             $table->float('value');
             $table->json('options');
+            $table->json('models');
             $table->timestamps();
 
             $table->foreign('conveyor_frame_id')

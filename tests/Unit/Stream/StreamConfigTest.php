@@ -2,7 +2,7 @@
 
 namespace Tanzar\Conveyor\Tests\Unit\Stream;
 
-use Tanzar\Conveyor\Exceptions\InvalidModelException;
+use Tanzar\Conveyor\Exceptions\InvalidClassException;
 use Tanzar\Conveyor\Stream\StreamConfig;
 use Tanzar\Conveyor\Tests\Models\Tester;
 use Tanzar\Conveyor\Tests\TestCase;
@@ -45,7 +45,7 @@ class StreamConfigTest extends TestCase
 
     public function test_exception_on_add(): void
     {
-        $this->expectException(InvalidModelException::class);
+        $this->expectException(InvalidClassException::class);
 
         $config = new StreamConfig();
 

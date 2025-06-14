@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Tanzar\Conveyor\Configs\ModelConfig;
 use Tanzar\Conveyor\Exceptions\InvalidBuildFunctionException;
 use Tanzar\Conveyor\Exceptions\InvalidHandlerException;
-use Tanzar\Conveyor\Exceptions\InvalidModelException;
+use Tanzar\Conveyor\Exceptions\InvalidClassException;
 use Tanzar\Conveyor\Params\Params;
 use Tanzar\Conveyor\Tests\Models\Tester;
 use Tanzar\Conveyor\Tests\TestCase;
@@ -16,7 +16,7 @@ class ModelConfigTest extends TestCase
 {
     public function test_invalid_class(): void
     {
-        $this->expectException(InvalidModelException::class);
+        $this->expectException(InvalidClassException::class);
 
         $config = new ModelConfig(Model::class);
     }

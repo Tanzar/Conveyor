@@ -4,11 +4,11 @@ namespace Tanzar\Conveyor\Configs;
 
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use ReflectionFunction;
 use Tanzar\Conveyor\Exceptions\InvalidBuildFunctionException;
 use Tanzar\Conveyor\Exceptions\InvalidHandlerException;
-use Tanzar\Conveyor\Exceptions\InvalidModelException;
-use Tanzar\Conveyor\Models\ConveyorModel;
+use Tanzar\Conveyor\Exceptions\InvalidClassException;
 use Tanzar\Conveyor\Params\Params;
 
 class ModelConfig implements ModelConfigInterface
@@ -19,8 +19,8 @@ class ModelConfig implements ModelConfigInterface
 
     public function __construct(private string $class)
     {
-        if (!is_subclass_of($class, ConveyorModel::class)) {
-            throw new InvalidModelException("Given class $class is not extending " . ConveyorModel::class);
+        if (!is_subclass_of($class, Model::class)) {
+            throw new InvalidClassException("Given class $class is not extending " . Model::class);
         }
     }
 

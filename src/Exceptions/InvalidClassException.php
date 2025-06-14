@@ -4,7 +4,7 @@ namespace Tanzar\Conveyor\Exceptions;
 
 use Exception;
 
-class InvalidModelException extends Exception
+class InvalidClassException extends Exception
 {
 
     public function __construct(string $msg)

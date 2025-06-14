@@ -4,7 +4,6 @@ namespace Tanzar\Conveyor\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -14,6 +13,7 @@ use Illuminate\Support\Carbon;
  * @property bool $hidden
  * @property float $value
  * @property array $options
+ * @property array $models
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
@@ -25,6 +25,7 @@ class ConveyorCell extends Model
         return [
             'hidden' => 'boolean',
             'options' => 'array',
+            'models' => 'array',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
@@ -35,8 +36,4 @@ class ConveyorCell extends Model
         return $this->belongsTo(ConveyorFrame::class);
     }
 
-    public function models(): HasMany
-    {
-        return $this->hasMany(ConveyorCellModel::class);
-    }
 }
