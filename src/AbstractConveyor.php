@@ -3,16 +3,16 @@
 namespace Tanzar\Conveyor;
 
 use Tanzar\Conveyor\Base\Handler\DataHandler;
-use Tanzar\Conveyor\Cells\DataCells;
+use Tanzar\Conveyor\Cells\Cells;
 
 abstract class AbstractConveyor
 {
-    private DataCells $cells;
+    private Cells $cells;
     private DataHandler $handler;
 
     public function __construct()
     {
-        $this->cells = new DataCells();
+        $this->cells = new Cells();
         $this->handler = new DataHandler();
     }
 
@@ -47,7 +47,7 @@ abstract class AbstractConveyor
 
     abstract protected function format(): array;
 
-    final protected function cells(): DataCells
+    final protected function cells(): Cells
     {
         return $this->cells;
     }

@@ -6,7 +6,7 @@ use Illuminate\Support\Collection;
 use Tanzar\Conveyor\Models\ConveyorCell;
 use Tanzar\Conveyor\Models\ConveyorFrame;
 
-class DataCells
+final class Cells implements CellsInterface
 {
 
     private Collection $cells;
@@ -22,7 +22,7 @@ class DataCells
         }
     }
 
-    public function get(string...$keys): Cell
+    public function get(string...$keys): CellInterface
     {
         $key = $this->combineKeys($keys);
 

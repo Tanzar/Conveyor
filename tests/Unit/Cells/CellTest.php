@@ -113,7 +113,6 @@ class CellTest extends TestCase
     public function test_updating_cell(): void
     {
         $conveyor = new ConveyorFrame();
-
         $conveyor->base_key = 'key';
         $conveyor->key = 'key_one';
         $conveyor->params = [];
@@ -160,5 +159,41 @@ class CellTest extends TestCase
                 Tester::class => [ $first->id => 5, $second->id => 20 ]
             ])
         ]);
+    }
+
+    public function test_not_saving_reactice_cell(): void
+    {
+        $conveyor = new ConveyorFrame();
+        $conveyor->base_key = 'key';
+        $conveyor->key = 'key_one';
+        $conveyor->params = [];
+        $conveyor->save();
+        
+        $conveyorCell = new ConveyorCell();
+        $conveyorCell->conveyor_frame_id = $conveyor->id;
+        $conveyorCell->key = 'row.col';
+        $conveyorCell->hidden = true;
+        $conveyorCell->value = 20;
+        $conveyorCell->options = [ 'day' => false ];
+        $conveyorCell->models = [];
+        $conveyorCell->save();
+
+        $cell = new Cell($conveyorCell);
+        $cell->setReactive(function() {
+            return 10;
+        });
+
+        $cell->save();
+
+        $this->assertDatabaseMissing(ConveyorCell::class, [ 'id' => $conveyorCell->id ]);
+
+        $second = new Cell(new ConveyorCell());
+        $second->setReactive(function() {
+            return 10;
+        });
+
+        $second->save();
+
+        $this->assertDatabaseEmpty(ConveyorCell::class);
     }
 }
