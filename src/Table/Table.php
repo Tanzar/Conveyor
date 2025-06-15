@@ -3,7 +3,7 @@
 namespace Tanzar\Conveyor\Table;
 
 use Tanzar\Conveyor\AbstractConveyor;
-use Tanzar\Conveyor\Cells\DataCell;
+use Tanzar\Conveyor\Cells\Cell;
 use Tanzar\Conveyor\Table\Frame\Column;
 use Tanzar\Conveyor\Table\Frame\Columns;
 use Tanzar\Conveyor\Table\Frame\Row;
@@ -55,7 +55,7 @@ abstract class Table extends AbstractConveyor
         return $cells;
     }
 
-    public function get(string|Row $row, string|Column $column): ?DataCell
+    public function get(string|Row $row, string|Column $column): ?Cell
     {
         $rowKey = ($row instanceof Row) ? $row->key : $row;
         $colKey = ($column instanceof Column) ? $column->key : $column;
@@ -70,6 +70,6 @@ abstract class Table extends AbstractConveyor
         return null;
     }
     
-    abstract protected function defaultCell(string $row, string $column): DataCell;
+    abstract protected function defaultCell(string $row, string $column): Cell;
 
 }

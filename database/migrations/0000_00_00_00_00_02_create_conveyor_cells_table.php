@@ -14,11 +14,11 @@ class CreateConveyorCells extends Migration
         Schema::create('conveyor_cells', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('conveyor_frame_id');
-            $table->string('key');
-            $table->boolean('hidden');
-            $table->float('value');
-            $table->json('options');
-            $table->json('models');
+            $table->text('key');
+            $table->boolean('hidden')->default(false);
+            $table->float('value')->default(0);
+            $table->json('options')->default('{}');
+            $table->json('models')->default('{}');
             $table->timestamps();
 
             $table->foreign('conveyor_frame_id')

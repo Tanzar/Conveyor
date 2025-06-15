@@ -5,6 +5,7 @@ namespace Tanzar\Conveyor\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 
 /**
  * @property int $id
@@ -13,6 +14,7 @@ use Illuminate\Support\Carbon;
  * @property array $params
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * @property-read Collection<int, ConveyorCell> $cells
  */
 final class ConveyorFrame extends Model
 {
