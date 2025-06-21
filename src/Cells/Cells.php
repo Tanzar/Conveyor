@@ -2,6 +2,7 @@
 
 namespace Tanzar\Conveyor\Cells;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Tanzar\Conveyor\Models\ConveyorCell;
 use Tanzar\Conveyor\Models\ConveyorFrame;
@@ -26,15 +27,17 @@ final class Cells implements CellsInterface
     {
         $key = $this->combineKeys($keys);
 
-        if ($this->cells->doesntContain($key)) {
+        $cell = $this->cells->get($key);
+
+        if ($cell === null) {
             $frameCell = new ConveyorCell();
             $frameCell->conveyor_frame_id = $this->frame->id;
             $frameCell->key = $key;
+            $frameCell->value = 0;
+            $frameCell->models = [];
 
             $cell = new Cell($frameCell);
             $this->cells->put($key, $cell);
-        } else {
-            $cell = $this->cells->get($key);
         }
 
         return $cell;
@@ -53,6 +56,13 @@ final class Cells implements CellsInterface
     {
         foreach ($this->cells as $cell) {
             $cell->save();
+        }
+    }
+
+    public function removeModel(Model $model): void
+    {
+        foreach ($this->cells as $cell) {
+            $cell->removeModel($model);
         }
     }
 }

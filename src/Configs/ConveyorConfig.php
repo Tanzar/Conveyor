@@ -2,6 +2,8 @@
 
 namespace Tanzar\Conveyor\Configs;
 
+use Illuminate\Database\Eloquent\Model;
+
 final class ConveyorConfig implements ConveyorConfigInterface
 {
     private array $models = [];
@@ -18,6 +20,15 @@ final class ConveyorConfig implements ConveyorConfigInterface
         $this->models[$class] = $config;
 
         return $config;
+    }
+
+    /**
+     * Get config by model class name
+     * @param string $class
+     */
+    public function get(string $class): ?ModelConfig
+    {
+        return $this->models[$class] ?? null;
     }
 
     /**

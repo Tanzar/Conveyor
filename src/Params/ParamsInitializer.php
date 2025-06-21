@@ -7,7 +7,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Tanzar\Conveyor\Exceptions\IncorrectParamOptionsException;
 
-final class ParamsInitializer implements ParamsInitializerInterface
+final class ParamsInitializer
 {
 	private array $options = [];
 

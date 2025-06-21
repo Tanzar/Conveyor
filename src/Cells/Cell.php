@@ -152,6 +152,29 @@ final class Cell implements CellInterface
     }
 
     /**
+     * Remove given model from cell
+     * @param Model $model
+     * @return void
+     */
+    public function removeModel(Model $model): void
+    {
+        $models = $this->cell->models;
+
+        $isset = isset(
+            $models[$model::class],
+            $models[$model::class][$model->getKey()]
+        );
+
+        if ($isset) {
+            $value = $models[$model::class][$model->getKey()];
+
+            $this->cell->value -= $value;
+            unset($models[$model::class][$model->getKey()]);
+            $this->cell->models = $models;
+        }
+    }
+
+    /**
      * Returns cell current value
      * @return float|int
      */

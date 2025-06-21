@@ -161,7 +161,7 @@ class CellTest extends TestCase
         ]);
     }
 
-    public function test_not_saving_reactice_cell(): void
+    public function test_not_saving_reactive_cell(): void
     {
         $conveyor = new ConveyorFrame();
         $conveyor->base_key = 'key';
@@ -195,5 +195,50 @@ class CellTest extends TestCase
         $second->save();
 
         $this->assertDatabaseEmpty(ConveyorCell::class);
+    }
+
+    public function test_remove_model(): void
+    {
+        $conveyor = new ConveyorFrame();
+        $conveyor->base_key = 'key';
+        $conveyor->key = 'key_one';
+        $conveyor->params = [];
+
+        $conveyor->save();
+        
+        $first = new Tester();
+        $first->save();
+
+        $second = new Tester();
+        $second->save();
+
+        $conveyorCell = new ConveyorCell();
+        $conveyorCell->conveyor_frame_id = $conveyor->id;
+        $conveyorCell->key = 'row.col';
+        $conveyorCell->hidden = true;
+        $conveyorCell->value = 20;
+        $conveyorCell->options = [ 'day' => false ];
+        $conveyorCell->models = [
+            Tester::class => [
+                $first->id => 10,
+                $second->id => 10,
+            ]
+        ];
+        $conveyorCell->save();
+
+        $cell = new Cell($conveyorCell);
+
+        $cell->removeModel($first);
+        $cell->save();
+
+        $this->assertDatabaseHas(ConveyorCell::class, [
+            'key' => 'row.col',
+            'hidden' => 1,
+            'value' => 10,
+            'options' => json_encode([ 'day' => false ]),
+            'models' => json_encode([
+                Tester::class => [ $second->id => 10 ]
+            ])
+        ]);
     }
 }

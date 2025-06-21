@@ -2,44 +2,117 @@
 
 namespace Tanzar\Conveyor\Tests\Unit\Table;
 
+use Tanzar\Conveyor\Models\ConveyorCell;
+use Tanzar\Conveyor\Models\ConveyorFrame;
+use Tanzar\Conveyor\Tests\Classes\TableExample;
+use Tanzar\Conveyor\Tests\Models\Food;
 use Tanzar\Conveyor\Tests\TestCase;
 
 class TableExampleTest extends TestCase
 {
 
-    // @TODO update when new conveyor is ready
-    public function test_table_example_format(): void
+    public function test_table_example_correct_path(): void
     {
-        //$table = new TableExample();
+        Food::factory()->count(5)->create([
+            'type' => 'pizza',
+            'day' => 'today'
+        ]);
 
-        $json = [];//$table->run();
+        Food::factory()->count(10)->create([
+            'type' => 'pizza',
+            'day' => 'yesterday'
+        ]);
+
+        Food::factory()->count(2)->create([
+            'type' => 'burger',
+            'day' => 'today'
+        ]);
+
+        Food::factory()->count(7)->create([
+            'type' => 'burger',
+            'day' => 'yesterday'
+        ]);
+
+        $frame = new ConveyorFrame();
+        $frame->key = 'table-';
+        $frame->base_key = 'table';
+        $frame->params = [];
+        $frame->save();
+
+        $table = new TableExample('table');
+
+        $table->run($frame);
 
         $expected = [
             'rows' => [
-                [ 'key' => 'total', 'label' => 'Total', 'options' => [] ],
-                [ 'key' => 'pizzas', 'label' => 'Pizzas', 'options' => [] ],
-                [ 'key' => 'burgers', 'label' => 'Burgers', 'options' => [] ],
+                [ 'key' => 'burger', 'label' => 'Burgers', 'options' => [] ],
+                [ 'key' => 'pizza', 'label' => 'Pizzas', 'options' => [] ],
             ],
             'columns' => [
-                [ 'key' => 'today', 'label' => 'First', 'options' => [] ],
-                [ 'key' => 'yesterday', 'label' => 'Second', 'options' => [] ],
+                [ 'key' => 'total', 'label' => 'Sum', 'options' => [] ],
+                [ 'key' => 'today', 'label' => 'Today', 'options' => [] ],
+                [ 'key' => 'yesterday', 'label' => 'Yesterday', 'options' => [] ],
             ],
             'cells' => [
-                'total' => [
-                    'today' => 8.0,
-                    'yesterday' => 3.0,
-                ],
-                'pizzas' => [
-                    'today' => 3.0,
-                    'yesterday' => 2.0,
-                ],
-                'burgers' => [
+                'pizza' => [
                     'today' => 5.0,
-                    'yesterday' => 1.0,
+                    'yesterday' => 10.0,
+                    'total' => 15.0,
+                ],
+                'burger' => [
+                    'today' => 2.0,
+                    'yesterday' => 7.0,
+                    'total' => 9.0,
                 ],
             ],
         ];
 
-        //$this->assertEquals($expected, $json);
+        $this->assertEquals($expected, $table->format());
+
+        $this->assertDatabaseHas(ConveyorFrame::class, [
+            'key' => 'table-',
+            'base_key' => 'table',
+            'params' => '[]'
+        ]);
+
+        $this->assertDatabaseHas(ConveyorCell::class, [
+            'key' => 'pizza.today.',
+            'value' => 5.0,
+            'models' => json_encode([
+                Food::class => [ 1 => 1, 2 => 1, 3 => 1, 4 => 1, 5 => 1 ]
+            ]),
+        ]);
+
+        $this->assertDatabaseHas(ConveyorCell::class, [
+            'key' => 'pizza.yesterday.',
+            'value' => 10.0,
+            'models' => json_encode([
+                Food::class => [ 6 => 1, 7 => 1, 8 => 1, 9 => 1, 10 => 1, 11 => 1, 12 => 1, 13 => 1, 14 => 1, 15 => 1 ]
+            ]),
+        ]);
+
+        $this->assertDatabaseHas(ConveyorCell::class, [
+            'key' => 'burger.today.',
+            'value' => 2.0,
+            'models' => json_encode([
+                Food::class => [ 16 => 1, 17 => 1 ]
+            ]),
+        ]);
+
+        $this->assertDatabaseHas(ConveyorCell::class, [
+            'key' => 'burger.yesterday.',
+            'value' => 7.0,
+            'models' => json_encode([
+                Food::class => [ 18 => 1, 19 => 1, 20 => 1, 21 => 1, 22 => 1, 23 => 1, 24 => 1 ]
+            ]),
+        ]);
+
+        $this->assertDatabaseMissing(ConveyorCell::class, [
+            'key' => 'pizza.total.'
+        ]);
+        
+        $this->assertDatabaseMissing(ConveyorCell::class, [
+            'key' => 'burger.total.'
+        ]);
     }
 }
