@@ -1,6 +1,6 @@
 <?php
 
-namespace Tanzar\Conveyor\Tests\Unit;
+namespace Tanzar\Conveyor\Tests\Unit\Table;
 
 use Tanzar\Conveyor\Table\Frame\OrderedContainer;
 use Tanzar\Conveyor\Tests\TestCase;
