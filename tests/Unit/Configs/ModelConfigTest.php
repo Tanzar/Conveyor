@@ -96,13 +96,4 @@ class ModelConfigTest extends TestCase
 
         $config->query(function(Builder $query, Tester $test) { });
     }
-
-    public function test_id_column(): void
-    {
-        $config = new ModelConfig(Tester::class);
-        
-        $config->idColumn('model_id');
-
-        $this->assertEquals('model_id', $config->getIdColumn());
-    }
 }

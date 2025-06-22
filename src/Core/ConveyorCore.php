@@ -86,6 +86,8 @@ abstract class ConveyorCore
             ->exists();
 
         if ($queryRetrievesModel) {
+            $model->loadMissing($config->getRelations());
+
             $this->handle($model, $config);
         } else {
             $this->cells->removeModel($model);
@@ -96,7 +98,7 @@ abstract class ConveyorCore
     {
         foreach ($this->config->toArray() as $modelConfig) {
             
-            $modelConfig->getQuery($this->params)
+            $modelConfig->getQuery($this->params, true)
                 ->lazyById($this->chunk, $modelConfig->getIdColumn())
                 ->each(function(Model $model) use ($modelConfig) {
                     $this->handle($model, $modelConfig);

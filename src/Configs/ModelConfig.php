@@ -15,7 +15,7 @@ class ModelConfig implements ModelConfigInterface
 {
     private array $handlers = [];
     private ?Closure $query = null;
-    private string $idColumn = 'id';
+    private array $relations = [];
 
     public function __construct(private string $class)
     {
@@ -98,13 +98,21 @@ class ModelConfig implements ModelConfigInterface
     }
 
     /**
-     * Name of id column used by model
-     * @param string $column
+     * Add relation to be loaded
+     * @param string[]|string $relation
      * @return ModelConfigInterface
      */
-    public function idColumn(string $column): ModelConfigInterface
+    public function relation(array|string $relation): ModelConfigInterface
     {
-        $this->idColumn = $column;
+        if (is_array($relation)) {
+            foreach ($relation as $text) {
+                if (is_string($text)) {
+                    $this->relations[] = $text;
+                }
+            }
+        } else {
+            $this->relations[] = $relation;
+        }
         return $this;
     }
 
@@ -117,10 +125,14 @@ class ModelConfig implements ModelConfigInterface
         return $this->handlers;
     }
 
-    public function getQuery(Params $params): Builder
+    public function getQuery(Params $params, bool $withRelations = false): Builder
     {
         /** @var Builder $query */
         $builder = $this->class::query();
+
+        if ($withRelations && count($this->relations) > 0) {
+            $builder->with($this->relations);
+        }
 
         if ($this->query !== null) {
             $callable = $this->query;
@@ -132,6 +144,18 @@ class ModelConfig implements ModelConfigInterface
     
     public function getIdColumn(): string
     {
-        return $this->idColumn;
+        $class = $this->class;
+
+        /** @var Model $model */
+        $model = new $class();
+        return $model->getKeyName();
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getRelations(): array
+    {
+        return $this->relations;
     }
 }

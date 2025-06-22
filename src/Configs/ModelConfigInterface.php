@@ -9,5 +9,5 @@ interface ModelConfigInterface
 
     public function query(callable $build): self;
 
-    public function idColumn(string $column): self;
+    public function relation(string|array $relation): self;
 }
