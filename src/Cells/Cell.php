@@ -158,6 +158,10 @@ final class Cell implements CellInterface
      */
     public function removeModel(Model $model): void
     {
+        if (self::$currentModel === $this->lastAccessed) {
+            return;
+        }
+
         $models = $this->cell->models;
 
         $isset = isset(

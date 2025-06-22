@@ -109,6 +109,7 @@ abstract class ConveyorCore
         Cell::$currentModel = $model;
         foreach ($config->getHandlers() as $handler) {
             $handler($model);
+            $this->cells->removeModel($model);
         }
         Cell::$currentModel = null;
     }
