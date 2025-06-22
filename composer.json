@@ -48,5 +48,8 @@
             "@build",
             "@php vendor/bin/testbench serve --ansi"
         ]
+    },
+    "require": {
+        "spatie/laravel-package-tools": "^1.19"
     }
 }

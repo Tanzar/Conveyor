@@ -2,27 +2,22 @@
 
 namespace Tanzar\Conveyor\Table;
 
-use Tanzar\Conveyor\Base\AbstractConveyor;
-use Tanzar\Conveyor\Base\Cells\DataCell;
+use Tanzar\Conveyor\Cells\CellInterface;
+use Tanzar\Conveyor\Core\ConveyorCore;
 use Tanzar\Conveyor\Table\Frame\Column;
 use Tanzar\Conveyor\Table\Frame\Columns;
 use Tanzar\Conveyor\Table\Frame\Row;
 use Tanzar\Conveyor\Table\Frame\Rows;
 
-abstract class Table extends AbstractConveyor
+abstract class Table extends ConveyorCore
 {
     private Rows $rows;
     private Columns $columns;
 
-    public function __construct()
+    final protected function runSetup(): void
     {
-        parent::__construct();
         $this->rows = new Rows();
         $this->columns = new Columns();
-    }
-
-    protected function setup(): void
-    {
         $this->setupRows($this->rows);
         $this->setupColumns($this->columns);
     }
@@ -31,7 +26,7 @@ abstract class Table extends AbstractConveyor
 
     abstract function setupColumns(Columns $columns): void;
 
-    protected function format(): array
+    public function format(): array
     {
         return [
             'rows' => $this->rows->toArray(),
@@ -55,21 +50,29 @@ abstract class Table extends AbstractConveyor
         return $cells;
     }
 
-    public function get(string|Row $row, string|Column $column): ?DataCell
+    /**
+     * Get cell under given row and column
+     * @param string|Row $row
+     * @param string|Column $column
+     * @return CellInterface|null
+     */
+    public function get(string|Row $row, string|Column $column): ?CellInterface
     {
         $rowKey = ($row instanceof Row) ? $row->key : $row;
         $colKey = ($column instanceof Column) ? $column->key : $column;
         if ($this->rows->isSet($rowKey) && $this->columns->isSet($colKey)) {
-            $cell = $this->cells()->get($rowKey, $colKey);
-            if ($cell === null) {
-                $cell = $this->defaultCell($rowKey, $colKey);
-                $this->cells()->set($cell, $rowKey, $colKey);
-            }
-            return $cell;
+            return $this->cells()->get($rowKey, $colKey);
         }
         return null;
     }
-    
-    abstract protected function defaultCell(string $row, string $column): DataCell;
 
+    final protected function rows(): Rows
+    {
+        return $this->rows;
+    }
+
+    final protected function columns(): Columns
+    {
+        return $this->columns;
+    }
 }

@@ -2,7 +2,7 @@
 
 namespace Tanzar\Conveyor\Tests\Unit;
 
-use Tanzar\Conveyor\Base\Containers\OrderedContainer;
+use Tanzar\Conveyor\Table\Frame\OrderedContainer;
 use Tanzar\Conveyor\Tests\TestCase;
 
 class OrderedContainerTest extends TestCase

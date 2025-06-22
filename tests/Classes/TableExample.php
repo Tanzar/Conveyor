@@ -2,107 +2,49 @@
 
 namespace Tanzar\Conveyor\Tests\Classes;
 
-use Tanzar\Conveyor\Base\Cells\NumberCell;
-use Tanzar\Conveyor\Base\Cells\ReactiveCell;
-use Tanzar\Conveyor\Base\Feeder\ArrayFeeder;
+use Tanzar\Conveyor\Configs\ConveyorConfigInterface;
 use Tanzar\Conveyor\Table\Frame\Rows;
 use Tanzar\Conveyor\Table\Frame\Columns;
-use Tanzar\Conveyor\Base\Cells\DataCell;
-use Tanzar\Conveyor\Base\Handler\DataHandler;
 use Tanzar\Conveyor\Table\Table;
+use Tanzar\Conveyor\Tests\Models\Food;
 
 class TableExample extends Table
 {
-
-    public function setupRows(Rows $rows): void
+    public function setupRows(Rows $rows): void 
     {
-        $rows->add('total', 'Total');
-        $rows->add('pizzas', 'Pizzas');
-        $rows->add('burgers', 'Burgers');
-        $rows->add('drinks', 'Drinks')->hide();
+        $rows->add('burger', 'Burgers');
+        $rows->add('pizza', 'Pizzas');
     }
 
     public function setupColumns(Columns $columns): void
     {
-        $columns->add('today', 'First');
-        $columns->add('yesterday', 'Second');
+        $columns->add('total', 'Sum');
+        $columns->add('today', 'Today');
+        $columns->add('yesterday', 'Yesterday');
     }
 
-    protected function defaultCell(string $row, string $column): DataCell
+    protected function setup(ConveyorConfigInterface $config): void
     {
-        if ($row === 'total') {
-            return new ReactiveCell(function () use ($column) {
-                return $this->get('pizzas', $column)->getValue() + 
-                    $this->get('burgers', $column)->getValue();
+        $config->model(Food::class)
+            ->handler(function (Food $food) {
+                $this->get($food->type, $food->day)
+                    ->change(1);
             });
-        }
-        return new NumberCell();
     }
 
-    protected function initHandler(DataHandler $handler): void
+    protected function postProcessing(): void
     {
-        $feeder = new ArrayFeeder([
-            [ 'type' => 'pizza', 'day' => '2012-01-03'],
-            [ 'type' => 'pizza', 'day' => '2012-01-03'],
-            [ 'type' => 'pizza', 'day' => '2012-01-04'],
-            [ 'type' => 'pizza', 'day' => '2012-01-04'],
-            [ 'type' => 'pizza', 'day' => '2012-01-04'],
-            [ 'type' => 'burger', 'day' => '2012-01-03'],
-            [ 'type' => 'burger', 'day' => '2012-01-04'],
-            [ 'type' => 'burger', 'day' => '2012-01-04'],
-            [ 'type' => 'burger', 'day' => '2012-01-04'],
-            [ 'type' => 'burger', 'day' => '2012-01-04'],
-            [ 'type' => 'burger', 'day' => '2012-01-04'],
-            [ 'type' => 'cola', 'day' => '2012-01-03'],
-            [ 'type' => 'cola', 'day' => '2012-01-03'],
-            [ 'type' => 'cola', 'day' => '2012-01-03'],
-            [ 'type' => 'cola', 'day' => '2012-01-03'],
-            [ 'type' => 'cola', 'day' => '2012-01-03'],
-        ]);
-        $handler->add($feeder, function(array $item) {
-            $this->countBurger($item);
-            $this->countPizza($item);
-            $this->countDrink($item);
-        });
-    }
+        $this->get('burger', 'total')
+            ->setReactive(function() {
+                return $this->get('burger', 'today')->getValue() +
+                    $this->get('burger', 'yesterday')->getValue();
+            });
 
-    private function countBurger(array $item): void
-    {
-        if ($item['type'] === 'burger') {
-            $cell = $this->get(
-                'burgers', 
-                ($item['day'] === '2012-01-04') ? 'today' : 'yesterday'
-            ); 
-
-            /** @var NumberCell $cell */
-            $cell->change(1);
-        }
-    }
-
-    private function countPizza(array $item): void
-    {
-        if ($item['type'] === 'pizza') {
-            $cell = $this->get(
-                'pizzas', 
-                ($item['day'] === '2012-01-04') ? 'today' : 'yesterday'
-            ); 
-
-            /** @var NumberCell $cell */
-            $cell->change(1);
-        }
-    }
-
-    private function countDrink(array $item): void
-    {
-        if ($item['type'] === 'drink') {
-            $cell = $this->get(
-                'drinks', 
-                ($item['day'] === '2012-01-04') ? 'today' : 'yesterday'
-            ); 
-
-            /** @var NumberCell $cell */
-            $cell->change(1);
-        }
+        $this->get('pizza', 'total')
+            ->setReactive(function() {
+                return $this->get('pizza', 'today')->getValue() +
+                    $this->get('pizza', 'yesterday')->getValue();
+            });
     }
 
 }
