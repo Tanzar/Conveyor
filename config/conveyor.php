@@ -2,7 +2,7 @@
 
 return [
     'enableStreaming' => false,
-    'streams' => [
+    'keys' => [
         
     ],
 ];
