@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Tanzar\Conveyor\Jobs\ConveyorRunJob;
 use Tanzar\Conveyor\Models\ConveyorFrame;
 
-class ConveyorUpdateHelper
+final class ConveyorUpdateHelper
 {
 
     /**
