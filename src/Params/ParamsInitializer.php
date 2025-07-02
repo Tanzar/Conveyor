@@ -68,9 +68,13 @@ final class ParamsInitializer
 
     public function toArray(): array
     {
-        return collect($this->options)
-            ->values()
-            ->toArray();
+        $options = collect($this->options);
+
+        if ($options->count() === 0 && count($this->rules) === 0) {
+            return [ [] ];
+        }
+
+        return $options->values()->toArray();
     }
 
 }
