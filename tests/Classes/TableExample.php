@@ -3,6 +3,8 @@
 namespace Tanzar\Conveyor\Tests\Classes;
 
 use Tanzar\Conveyor\Configs\ConveyorConfigInterface;
+use Tanzar\Conveyor\Params\Params;
+use Tanzar\Conveyor\Params\ParamsInitializer;
 use Tanzar\Conveyor\Table\Frame\Rows;
 use Tanzar\Conveyor\Table\Frame\Columns;
 use Tanzar\Conveyor\Table\Table;
@@ -10,6 +12,18 @@ use Tanzar\Conveyor\Tests\Models\Food;
 
 class TableExample extends Table
 {
+    protected function initializer(): ParamsInitializer
+    {
+        $initializer = new ParamsInitializer([
+            'variant' => 'required|string'
+        ]);
+        $initializer->option([ 'variant' => 'all' ])
+            ->option([ 'variant' => 'pizzas' ])
+            ->option([ 'variant' => 'burgers' ]);
+
+        return $initializer;
+    }
+
     public function setupRows(Rows $rows): void 
     {
         $rows->add('burger', 'Burgers');
@@ -47,4 +61,8 @@ class TableExample extends Table
             });
     }
 
+    protected function allow(Params $params): bool
+    {
+        return $params->string('variant') === 'all';
+    }
 }

@@ -47,17 +47,19 @@ abstract class ConveyorCore
         return $this->paramsInitializer;
     }
 
-    final public function run(ConveyorFrame $frame, ?Model $model = null): void
+    final public function run(ConveyorFrame $frame, ?Model $model = null, bool $update = true): void
     {
         $this->params = new Params($frame->params);
         $this->cells = new Cells($frame);
 
         $this->runSetup();
 
-        if ($model) {
-            $this->updateModel($model);
-        } else {
-            $this->updateAll();
+        if ($update) {
+            if ($model) {
+                $this->updateModel($model);
+            } else {
+                $this->updateAll();
+            }
         }
 
         $this->postProcessing();
@@ -121,6 +123,21 @@ abstract class ConveyorCore
      * @return void
      */
     protected function postProcessing(): void { }
+
+    final public function allowAccess(ConveyorFrame $frame): bool
+    {
+        return $this->allow(new Params($frame->params));
+    }
+
+    /**
+     * Check if user is allowed to access conveyor broadcast
+     * @param Params $params
+     * @return bool
+     */
+    protected function allow(Params $params): bool
+    {
+        return true;
+    }
 
     abstract public function format(): array;
 

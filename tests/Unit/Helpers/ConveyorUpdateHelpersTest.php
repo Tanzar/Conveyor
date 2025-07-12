@@ -28,11 +28,17 @@ class ConveyorUpdateHelpersTest extends TestCase
     {
         Queue::fake();
 
+        $frame = new ConveyorFrame();
+        $frame->key = TableExample::class . '-variant=all;';
+        $frame->base_key = TableExample::class;
+        $frame->params = [ "variant" => "all" ];
+        $frame->save();
+
         $helper = new ConveyorUpdateByKeyHelper(TableExample::class);
 
-        $helper->params([]);
+        $helper->params([ 'variant' => 'all' ]);
 
-        $queue = 'conveyor:' . ConveyorFrame::first()->key;
+        $queue = 'conveyor:' . $frame->key;
 
         Queue::assertPushedOn($queue, ConveyorRunJob::class);
         Queue::assertPushed(ConveyorRunJob::class, 1);
@@ -42,9 +48,15 @@ class ConveyorUpdateHelpersTest extends TestCase
     {
         Queue::fake();
 
+        $frame = new ConveyorFrame();
+        $frame->key = TableExample::class . '-variant=all;';
+        $frame->base_key = TableExample::class;
+        $frame->params = [ "variant" => "all" ];
+        $frame->save();
+
         $helper = new ConveyorUpdateByKeyHelper(TableExample::class);
 
-        $helper->params([], false);
+        $helper->params([ 'variant' => 'all' ], false);
 
         Queue::assertNotPushed(ConveyorRunJob::class);
     }

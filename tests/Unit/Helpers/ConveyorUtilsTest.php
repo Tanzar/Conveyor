@@ -16,11 +16,11 @@ class ConveyorUtilsTest extends TestCase
 
         $frame = new ConveyorFrame();
         $frame->base_key = 'table';
-        $frame->key = 'table-date=2025-07-01;';
-        $frame->params = [ 'date' => '2025-07-01' ];
+        $frame->key = 'table-variant=all;';
+        $frame->params = [ 'variant' => 'all' ];
         $frame->save();
 
-        $utilFrame = ConveyorUtils::findFrame('table', [ 'date' => '2025-07-01' ]);
+        $utilFrame = ConveyorUtils::findFrame('table', [ 'variant' => 'all' ]);
 
         $this->assertEquals($frame->id, $utilFrame->id);
         $this->assertEquals($frame->key, $utilFrame->key);
@@ -32,7 +32,7 @@ class ConveyorUtilsTest extends TestCase
         
         config()->set('conveyor.keys', [ 'table' => TableExample::class ]);
 
-        ConveyorUtils::findFrame('table', [ 'date' => '2025-07-01' ]);
+        ConveyorUtils::findFrame('table', [ 'variant' => 'all' ]);
     }
 
     public function test_make_core(): void

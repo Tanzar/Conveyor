@@ -14,16 +14,16 @@ class ConveyorInitTest extends TestCase
     {
         $helper = new ConveyorInitHelper(TableExample::class);
 
-        $helper->option([ 'day' => 'now' ]);
+        $helper->option([ 'variant' => 'all' ]);
 
         $this->assertDatabaseHas(ConveyorFrame::class, [
-            'key' => TableExample::class . '-',
+            'key' => TableExample::class . '-variant=all;',
             'base_key' => TableExample::class,
-            'params' => '[]'
+            'params' => '{"variant":"all"}'
         ]);
     
         //Second call
-        $helper->option([ 'day' => 'now' ]);
+        $helper->option([ 'variant' => 'all' ]);
 
         $this->assertDatabaseCount(ConveyorFrame::class, 1);
     }
@@ -35,21 +35,29 @@ class ConveyorInitTest extends TestCase
         $helper->all();
 
         $this->assertDatabaseHas(ConveyorFrame::class, [
-            'key' => TableExample::class . '-',
+            'key' => TableExample::class . '-variant=pizzas;',
             'base_key' => TableExample::class,
-            'params' => '[]'
+            'params' => '{"variant":"pizzas"}'
         ]);
-        $this->assertDatabaseCount(ConveyorFrame::class, 1);
+
+        $this->assertDatabaseHas(ConveyorFrame::class, [
+            'key' => TableExample::class . '-variant=burgers;',
+            'base_key' => TableExample::class,
+            'params' => '{"variant":"burgers"}'
+        ]);
+
+        $this->assertDatabaseHas(ConveyorFrame::class, [
+            'key' => TableExample::class . '-variant=all;',
+            'base_key' => TableExample::class,
+            'params' => '{"variant":"all"}'
+        ]);
+
+        $this->assertDatabaseCount(ConveyorFrame::class, 3);
 
         //Second call
         $helper->all();
 
-        $this->assertDatabaseHas(ConveyorFrame::class, [
-            'key' => TableExample::class . '-',
-            'base_key' => TableExample::class,
-            'params' => '[]'
-        ]);
-        $this->assertDatabaseCount(ConveyorFrame::class, 1);
+        $this->assertDatabaseCount(ConveyorFrame::class, 3);
 
     }
 }
