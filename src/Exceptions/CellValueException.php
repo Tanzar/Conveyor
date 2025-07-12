@@ -2,9 +2,7 @@
 
 namespace Tanzar\Conveyor\Exceptions;
 
-use Exception;
-
-class CellValueException extends Exception
+final class CellValueException extends ConveyorException
 {
     public function __construct(string $message)
     {

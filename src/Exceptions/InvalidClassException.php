@@ -2,9 +2,7 @@
 
 namespace Tanzar\Conveyor\Exceptions;
 
-use Exception;
-
-class InvalidClassException extends Exception
+final class InvalidClassException extends ConveyorException
 {
 
     public function __construct(string $msg)

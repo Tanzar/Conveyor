@@ -32,6 +32,6 @@ class CreateConveyorCells extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('conveyors_cache');
+        Schema::dropIfExists('conveyor_cells');
     }
 };

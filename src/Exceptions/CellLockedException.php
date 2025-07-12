@@ -1,9 +1,8 @@
 <?php
 
 namespace Tanzar\Conveyor\Exceptions;
-use Exception;
 
-class CellLockedException extends Exception
+final class CellLockedException extends ConveyorException
 {
     public function __construct()
     {

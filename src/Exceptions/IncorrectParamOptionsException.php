@@ -3,10 +3,9 @@
 
 namespace Tanzar\Conveyor\Exceptions;
 
-use Exception;
 use Illuminate\Validation\Validator;
 
-class IncorrectParamOptionsException extends Exception
+final class IncorrectParamOptionsException extends ConveyorException
 {
 
     public function __construct(Validator $validator)

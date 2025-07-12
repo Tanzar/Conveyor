@@ -2,9 +2,7 @@
 
 namespace Tanzar\Conveyor\Exceptions;
 
-use Exception;
-
-class UninitializedConveyorException extends Exception
+final class UninitializedConveyorException extends ConveyorException
 {
 
     public function __construct(string $key)
