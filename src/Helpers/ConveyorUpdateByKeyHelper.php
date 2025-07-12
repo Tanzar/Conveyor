@@ -35,7 +35,7 @@ final class ConveyorUpdateByKeyHelper
         if ($dispatch) {
             ConveyorRunJob::dispatch($frame->id);
         } else {
-            $this->core->run($frame);
+            $this->core->update($frame);
         }
         
         return $this;
@@ -62,7 +62,7 @@ final class ConveyorUpdateByKeyHelper
                 if ($dispatch) {
                     ConveyorRunJob::dispatch($frame->id, $model);
                 } else {
-                    $this->core->run($frame, $model);
+                    $this->core->update($frame, $model);
                 }
             });
         
@@ -89,7 +89,7 @@ final class ConveyorUpdateByKeyHelper
                 if ($dispatch) {
                     ConveyorRunJob::dispatch($frame->id);
                 } else {
-                    $this->core->run($frame);
+                    $this->core->update($frame);
                 }
             });
         

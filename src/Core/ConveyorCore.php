@@ -10,6 +10,7 @@ use Tanzar\Conveyor\Cells\CellsInterface;
 use Tanzar\Conveyor\Configs\ConveyorConfig;
 use Tanzar\Conveyor\Configs\ConveyorConfigInterface;
 use Tanzar\Conveyor\Configs\ModelConfig;
+use Tanzar\Conveyor\Events\ConveyorUpdated;
 use Tanzar\Conveyor\Exceptions\InvalidCallException;
 use Tanzar\Conveyor\Models\ConveyorFrame;
 use Tanzar\Conveyor\Params\Params;
@@ -47,28 +48,28 @@ abstract class ConveyorCore
         return $this->paramsInitializer;
     }
 
-    final public function run(ConveyorFrame $frame, ?Model $model = null, bool $update = true): void
+    final public function update(ConveyorFrame $frame, ?Model $model = null): void
     {
         $this->params = new Params($frame->params);
         $this->cells = new Cells($frame);
 
         $this->runSetup();
 
-        if ($update) {
-            if ($model) {
-                $this->updateModel($model);
-            } else {
-                $this->updateAll();
-            }
+        if ($model) {
+            $this->updateModel($model);
+        } else {
+            $this->updateAll();
         }
 
         $this->postProcessing();
 
         $this->cells->save();
+
+        ConveyorUpdated::dispatch($frame);
     }
 
     /**
-     * Runs every time Conveyor calculates but before calculations
+     * use to run configs for your conveyor
      * @return void
      */
     protected function runSetup(): void { }
@@ -139,7 +140,22 @@ abstract class ConveyorCore
         return true;
     }
 
-    abstract public function format(): array;
+    public function formatData(ConveyorFrame $frame): array
+    {
+        $this->params = new Params($frame->params);
+
+        $frame->load('cells');
+
+        $this->cells = new Cells($frame);
+
+        $this->runSetup();
+
+        $this->postProcessing();
+
+        return $this->format();
+    }
+
+    abstract protected function format(): array;
 
     final protected function cells(): CellsInterface
     {

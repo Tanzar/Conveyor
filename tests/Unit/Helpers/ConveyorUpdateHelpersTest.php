@@ -2,7 +2,9 @@
 
 namespace Tanzar\Conveyor\Tests\Unit\Helpers;
 
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Queue;
+use Tanzar\Conveyor\Events\ConveyorUpdated;
 use Tanzar\Conveyor\Helpers\ConveyorUpdateByKeyHelper;
 use Tanzar\Conveyor\Helpers\ConveyorUpdateHelper;
 use Tanzar\Conveyor\Jobs\ConveyorRunJob;
@@ -27,6 +29,7 @@ class ConveyorUpdateHelpersTest extends TestCase
     public function test_by_key_params_dispatch(): void
     {
         Queue::fake();
+        Event::fake();
 
         $frame = new ConveyorFrame();
         $frame->key = TableExample::class . '-variant=all;';
@@ -47,6 +50,7 @@ class ConveyorUpdateHelpersTest extends TestCase
     public function test_by_key_params_dispatch_false(): void
     {
         Queue::fake();
+        Event::fake();
 
         $frame = new ConveyorFrame();
         $frame->key = TableExample::class . '-variant=all;';
@@ -64,6 +68,7 @@ class ConveyorUpdateHelpersTest extends TestCase
     public function test_by_key_model_dispatch(): void
     {
         Queue::fake();
+        Event::fake();
 
         $model = new Food();
         $model->type = 'pizza';
@@ -83,6 +88,7 @@ class ConveyorUpdateHelpersTest extends TestCase
     public function test_by_key_model_dispatch_false(): void
     {
         Queue::fake();
+        Event::fake();
 
         $model = new Food();
         $model->type = 'pizza';
@@ -142,6 +148,7 @@ class ConveyorUpdateHelpersTest extends TestCase
     public function test_model_dispatch_false(): void
     {
         Queue::fake();
+        Event::fake();
 
         $model = new Food();
         $model->type = 'pizza';
@@ -153,6 +160,7 @@ class ConveyorUpdateHelpersTest extends TestCase
         $helper->model($model, false);
 
         Queue::assertNotPushed(ConveyorRunJob::class);
+        Event::assertDispatched(ConveyorUpdated::class);
     }
 
     public function test_all_dispatch(): void
@@ -172,12 +180,14 @@ class ConveyorUpdateHelpersTest extends TestCase
     public function test_all_dispatch_false(): void
     {
         Queue::fake();
+        Event::fake();
 
         $helper = new ConveyorUpdateHelper();
 
         $helper->all(false);
 
         Queue::assertNotPushed(ConveyorRunJob::class);
+        Event::assertDispatched(ConveyorUpdated::class);
     }
 
 }

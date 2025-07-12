@@ -30,7 +30,7 @@ final class ConveyorUpdateHelper
                     ConveyorRunJob::dispatch($frame->id, $model);
                 } else {
                     $core = ConveyorUtils::makeCore($frame->base_key);
-                    $core->run($frame, $model);
+                    $core->update($frame, $model);
                 }
             });
         
@@ -57,7 +57,7 @@ final class ConveyorUpdateHelper
                     ConveyorRunJob::dispatch($frame->id);
                 } else {
                     $core = ConveyorUtils::makeCore($frame->base_key);
-                    $core->run($frame);
+                    $core->update($frame);
                 }
             });
         

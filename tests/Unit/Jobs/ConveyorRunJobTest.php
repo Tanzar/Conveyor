@@ -2,6 +2,8 @@
 
 namespace Tanzar\Conveyor\Tests\Unit\Jobs;
 
+use Illuminate\Support\Facades\Event;
+use Tanzar\Conveyor\Events\ConveyorUpdated;
 use Tanzar\Conveyor\Jobs\ConveyorRunJob;
 use Tanzar\Conveyor\Models\ConveyorCell;
 use Tanzar\Conveyor\Models\ConveyorFrame;
@@ -38,6 +40,8 @@ class ConveyorRunJobTest extends TestCase
 
     public function test_job_handle(): void
     {
+        Event::fake();
+
         $frame = new ConveyorFrame();
         $frame->key = TableExample::class . '-';
         $frame->base_key = TableExample::class;
@@ -47,6 +51,8 @@ class ConveyorRunJobTest extends TestCase
         $job = new ConveyorRunJob($frame->id);
 
         $job->handle();
+
+        Event::assertDispatched(ConveyorUpdated::class);
 
         $this->assertDatabaseHas(ConveyorFrame::class, [
             'key' => TableExample::class . '-',
@@ -97,6 +103,8 @@ class ConveyorRunJobTest extends TestCase
 
     public function test_job_handle_with_model(): void
     {
+        Event::fake();
+
         $frame = new ConveyorFrame();
         $frame->key = TableExample::class . '-';
         $frame->base_key = TableExample::class;
@@ -142,6 +150,8 @@ class ConveyorRunJobTest extends TestCase
         $job = new ConveyorRunJob($frame->id, $model);
 
         $job->handle();
+
+        Event::assertDispatched(ConveyorUpdated::class);
 
         $this->assertDatabaseHas(ConveyorFrame::class, [
             'key' => TableExample::class . '-',

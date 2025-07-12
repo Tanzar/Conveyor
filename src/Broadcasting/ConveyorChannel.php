@@ -28,10 +28,7 @@ class ConveyorChannel
         $core = ConveyorUtils::makeCore($frame->base_key);
             
         if ($core->allowAccess($frame)) {
-
-            $core->run(frame: $frame, update: false);
-
-            return $core->format();
+            return $core->formatData($frame);
         }
         return false;
     }

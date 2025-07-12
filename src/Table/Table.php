@@ -26,7 +26,7 @@ abstract class Table extends ConveyorCore
 
     abstract function setupColumns(Columns $columns): void;
 
-    public function format(): array
+    protected function format(): array
     {
         return [
             'rows' => $this->rows->toArray(),

@@ -28,7 +28,7 @@ class ConveyorRunJob implements ShouldQueue
     {
         $core = ConveyorUtils::makeCore($this->frame->base_key);
 
-        $core->run($this->frame, $this->model);
+        $core->update($this->frame, $this->model);
 
     }
 
