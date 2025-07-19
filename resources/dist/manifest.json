@@ -1,0 +1,8 @@
+{
+  "resources/assets/js/index.js": {
+    "file": "conveyor-js.umd.cjs",
+    "name": "index",
+    "src": "resources/assets/js/index.js",
+    "isEntry": true
+  }
+}

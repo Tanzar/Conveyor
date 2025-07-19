@@ -33,4 +33,12 @@ class ConveyorUpdated implements ShouldBroadcast
             new PrivateChannel('conveyor.' . $this->frame->key),
         ];
     }
+
+    /**
+     * The event's broadcast name.
+     */
+    public function broadcastAs(): string
+    {
+        return 'conveyor.updated';
+    }
 }
