@@ -20,10 +20,11 @@ export default defineConfig({
     outDir: './resources/dist',
     emptyOutDir: true, // also necessary
     rollupOptions: {
-      external: ['laravel-echo'],
+      external: ['laravel-echo', '@laravel/echo-vue'],
       output: {
         globals: {
           "laravel-echo": 'laravel-echo',
+          "@laravel/echo-vue": '@laravel/echo-vue'
         },
       },
     },

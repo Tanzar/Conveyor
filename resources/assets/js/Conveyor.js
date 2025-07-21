@@ -1,47 +1,32 @@
 import Echo from "laravel-echo";
+import { formConveyorKey } from "./formConveyorKey";
 
 export class Conveyor {
     #channel;
+    #listening = false;
 
-    constructor(key, params = {}) {
-        if (typeof key !== 'string') {
-            throw new Error('Conveyor error: key must be string');
-        }
+    constructor(key, params, handle) {
+        this.#channel = formConveyorKey(key, params)
 
-        if (typeof params !== 'object') {
-            throw new Error('Conveyor error: params must be object');
-        }
-
-        this.#channel = 'conveyor.' + key + '-';
-
-        Object.keys(params).forEach(paramKey => {
-            this.#channel += paramKey + '=' + params[paramKey] + ';';
-        });
-    }
-
-    /**
-     * Add listener called when conveyor updates
-     * @param {Function} handle function form managing event
-     * @returns {Conveyor}
-     */
-    onUpdate(handle) {
         if (typeof handle === 'function') {
             Echo.private(this.#channel)
-                .listen('conveyor.updated', (data) => {
+                .listen('.conveyor.updated', (data) => {
                     handle(data.data);
                 });
+            this.#listening = true;
 
         } else {
 
             console.log('Conveyor error: handle must be function')
         }
-        return this;
     }
 
     /**
-     * Call to end detecting stream
+     * Call to end stream
      */
     destroyed() {
-        Echo.leave(this.#channel);
+        if (this.#listening) {
+            Echo.leave(this.#channel);
+        }
     }
 }

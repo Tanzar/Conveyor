@@ -26,6 +26,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@laravel/echo-vue": "^2.1.6",
     "laravel-echo": "^2.1.6",
     "laravel-vite-plugin": "^2.0.0",
     "pusher-js": "^8.4.0",
