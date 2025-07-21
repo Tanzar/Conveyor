@@ -12,23 +12,13 @@ class ConveyorServiceProvider extends PackageServiceProvider
     {
         $package->name('conveyor')
             ->hasConfigFile()
-            ->hasAssets()
             ->discoversMigrations()
+            ->hasRoutes('channels')
             ->hasInstallCommand(function (InstallCommand $command) {
-                $command->publishConfigFile()
-                    ->publishAssets()
+                $command
+                    ->publishConfigFile()
                     ->publishMigrations()
                     ->askToRunMigrations();
             });
-    }
-
-    public function register()
-    {
-
-    }
-
-    public function boot()
-    {
-        
     }
 }

@@ -2,8 +2,6 @@
 
 namespace Tanzar\Conveyor\Tests;
 
-use CreateConveyorCells;
-use CreateConveyorFrames;
 use Tanzar\Conveyor\ConveyorServiceProvider;
 
 class TestCase extends \Orchestra\Testbench\TestCase
@@ -14,12 +12,12 @@ class TestCase extends \Orchestra\Testbench\TestCase
     {
         parent::setUp();
 
-        include_once __DIR__ . '/../database/migrations/0000_00_00_00_00_01_create_conveyor_frames_table.php';
-        (new CreateConveyorFrames())->up();
-
-        include_once __DIR__ . '/../database/migrations/0000_00_00_00_00_02_create_conveyor_cells_table.php';
-        (new CreateConveyorCells())->up();
-
+        $first = require __DIR__ . '/../database/migrations/0000_00_00_00_00_01_create_conveyor_frames_table.php';
+        $first->up();
+        
+        $second = require __DIR__ . '/../database/migrations/0000_00_00_00_00_02_create_conveyor_cells_table.php';
+        $second->up();
+        
         $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
         $this->artisan('migrate', ['--database' => 'testing'])->run();
     }

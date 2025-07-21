@@ -30,6 +30,7 @@ class ConveyorUpdateHelpersTest extends TestCase
     {
         Queue::fake();
         Event::fake();
+        config()->set('conveyor.queue', 'conveyor');
 
         $frame = new ConveyorFrame();
         $frame->key = TableExample::class . '-variant=all;';
@@ -41,9 +42,7 @@ class ConveyorUpdateHelpersTest extends TestCase
 
         $helper->params([ 'variant' => 'all' ]);
 
-        $queue = 'conveyor:' . $frame->key;
-
-        Queue::assertPushedOn($queue, ConveyorRunJob::class);
+        Queue::assertPushedOn('conveyor', ConveyorRunJob::class);
         Queue::assertPushed(ConveyorRunJob::class, 1);
     }
 
@@ -69,6 +68,7 @@ class ConveyorUpdateHelpersTest extends TestCase
     {
         Queue::fake();
         Event::fake();
+        config()->set('conveyor.queue', 'conveyor');
 
         $model = new Food();
         $model->type = 'pizza';
@@ -78,10 +78,8 @@ class ConveyorUpdateHelpersTest extends TestCase
         $helper = new ConveyorUpdateByKeyHelper(TableExample::class);
 
         $helper->model($model);
-
-        $queue = 'conveyor:' . ConveyorFrame::first()->key;
-
-        Queue::assertPushedOn($queue, ConveyorRunJob::class);
+        
+        Queue::assertPushedOn('conveyor', ConveyorRunJob::class);
         Queue::assertPushed(ConveyorRunJob::class, 1);
     }
 
@@ -105,13 +103,12 @@ class ConveyorUpdateHelpersTest extends TestCase
     public function test_by_key_all_dispatch(): void
     {
         Queue::fake();
-        $helper = new ConveyorUpdateByKeyHelper(TableExample::class);
+        config()->set('conveyor.queue', 'conveyor');
 
+        $helper = new ConveyorUpdateByKeyHelper(TableExample::class);
         $helper->all();
 
-        $queue = 'conveyor:' . ConveyorFrame::first()->key;
-
-        Queue::assertPushedOn($queue, ConveyorRunJob::class);
+        Queue::assertPushedOn('conveyor', ConveyorRunJob::class);
         Queue::assertPushed(ConveyorRunJob::class, 1);
     }
 
@@ -129,6 +126,7 @@ class ConveyorUpdateHelpersTest extends TestCase
     public function test_model_dispatch(): void
     {
         Queue::fake();
+        config()->set('conveyor.queue', 'conveyor');
 
         $model = new Food();
         $model->type = 'pizza';
@@ -139,9 +137,7 @@ class ConveyorUpdateHelpersTest extends TestCase
 
         $helper->model($model);
 
-        $queue = 'conveyor:' . ConveyorFrame::first()->key;
-
-        Queue::assertPushedOn($queue, ConveyorRunJob::class);
+        Queue::assertPushedOn('conveyor', ConveyorRunJob::class);
         Queue::assertPushed(ConveyorRunJob::class, 1);
     }
 
@@ -166,14 +162,13 @@ class ConveyorUpdateHelpersTest extends TestCase
     public function test_all_dispatch(): void
     {
         Queue::fake();
+        config()->set('conveyor.queue', 'conveyor');
 
         $helper = new ConveyorUpdateHelper();
 
         $helper->all();
 
-        $queue = 'conveyor:' . ConveyorFrame::first()->key;
-
-        Queue::assertPushedOn($queue, ConveyorRunJob::class);
+        Queue::assertPushedOn('conveyor', ConveyorRunJob::class);
         Queue::assertPushed(ConveyorRunJob::class, 1);
     }
 

@@ -21,7 +21,7 @@ class ConveyorRunJob implements ShouldQueue
     {
         $this->frame = ConveyorFrame::findOrFail($frameId);
 
-        $this->onQueue('conveyor:' . $this->frame->key);
+        $this->onQueue(config('conveyor.queue'));
     }
 
     public function handle(): void

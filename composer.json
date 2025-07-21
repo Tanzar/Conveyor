@@ -25,7 +25,7 @@
     },
     "require-dev": {
         "orchestra/testbench": "^9.9",
-        "phpunit/phpunit": "^11.3"
+        "phpunit/phpunit": "^11.5"
     },
     "extra": {
         "laravel": {
@@ -50,6 +50,6 @@
         ]
     },
     "require": {
-        "spatie/laravel-package-tools": "^1.19"
+        "spatie/laravel-package-tools": "^1.92"
     }
 }

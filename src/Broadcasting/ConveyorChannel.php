@@ -15,7 +15,7 @@ class ConveyorChannel
     /**
      * Authenticate the user's access to the channel.
      */
-    public function join(string $key): array|bool
+    public function join(string $user, string $key): array|bool
     {
         $frame = ConveyorFrame::query()
             ->where('key', $key)

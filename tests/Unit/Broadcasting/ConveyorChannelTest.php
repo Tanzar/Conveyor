@@ -19,7 +19,7 @@ class ConveyorChannelTest extends TestCase
         $frame->save();
 
         $channel = new ConveyorChannel();
-        $response = $channel->join(TableExample::class . '-variant=all;');
+        $response = $channel->join('', TableExample::class . '-variant=all;');
 
         $expected = [
             'rows' => [
@@ -57,7 +57,7 @@ class ConveyorChannelTest extends TestCase
         $frame->save();
 
         $channel = new ConveyorChannel();
-        $response = $channel->join(TableExample::class . '-variant=burgers;');
+        $response = $channel->join('', TableExample::class . '-variant=burgers;');
 
         $this->assertFalse($response);
     }
