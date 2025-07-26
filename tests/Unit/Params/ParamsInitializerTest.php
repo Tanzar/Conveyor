@@ -51,16 +51,4 @@ class ParamsInitializerTest extends TestCase
 
         $this->assertEquals([], $config->toArray());
     }
-
-    public function test_form_key(): void
-    {
-        $initializer = new ParamsInitializer();
-
-        $key = $initializer->formKey([
-            'user' => 1,
-            'group' => 3
-        ]);
-
-        $this->assertEquals('user=1;group=3;', $key);
-    }
 }

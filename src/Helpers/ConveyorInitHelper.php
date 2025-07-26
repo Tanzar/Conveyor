@@ -25,7 +25,7 @@ final class ConveyorInitHelper
 
         $valid = $initializer->checkValidity($params);
 
-        $key = $this->baseKey . '-' . $initializer->formKey($valid);
+        $key =  ConveyorUtils::formKey($this->baseKey, $valid);
 
         $doesntExist = ConveyorFrame::query()
             ->where('key', $key)
