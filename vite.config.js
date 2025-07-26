@@ -18,13 +18,14 @@ export default defineConfig({
       fileName: 'conveyor-js',
     },
     outDir: './resources/dist',
-    emptyOutDir: true, // also necessary
+    emptyOutDir: true,
     rollupOptions: {
-      external: ['laravel-echo', '@laravel/echo-vue'],
+      external: ['laravel-echo', '@laravel/echo-vue', 'axios'],
       output: {
         globals: {
           "laravel-echo": 'laravel-echo',
-          "@laravel/echo-vue": '@laravel/echo-vue'
+          "@laravel/echo-vue": '@laravel/echo-vue',
+          "axios": 'axios'
         },
       },
     },
