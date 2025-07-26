@@ -21,31 +21,7 @@ class ConveyorChannelTest extends TestCase
         $channel = new ConveyorChannel();
         $response = $channel->join('', TableExample::class . '-variant=all;');
 
-        $expected = [
-            'rows' => [
-                [ 'key' => 'burger', 'label' => 'Burgers', 'options' => [] ],
-                [ 'key' => 'pizza', 'label' => 'Pizzas', 'options' => [] ],
-            ],
-            'columns' => [
-                [ 'key' => 'total', 'label' => 'Sum', 'options' => [] ],
-                [ 'key' => 'today', 'label' => 'Today', 'options' => [] ],
-                [ 'key' => 'yesterday', 'label' => 'Yesterday', 'options' => [] ],
-            ],
-            'cells' => [
-                'pizza' => [
-                    'today' => 0,
-                    'yesterday' => 0,
-                    'total' => 0,
-                ],
-                'burger' => [
-                    'today' => 0,
-                    'yesterday' => 0,
-                    'total' => 0,
-                ],
-            ],
-        ];
-
-        $this->assertEquals($expected, $response);
+        $this->assertTrue($response);
     }
 
     public function test_channel_join_fail(): void

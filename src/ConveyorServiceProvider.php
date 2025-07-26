@@ -13,7 +13,7 @@ class ConveyorServiceProvider extends PackageServiceProvider
         $package->name('conveyor')
             ->hasConfigFile()
             ->discoversMigrations()
-            ->hasRoutes('channels')
+            ->hasRoutes([ 'channels', 'web' ])
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
                     ->publishConfigFile()

@@ -15,7 +15,7 @@ class ConveyorChannel
     /**
      * Authenticate the user's access to the channel.
      */
-    public function join(string $user, string $key): array|bool
+    public function join(string $user, string $key): bool
     {
         $frame = ConveyorFrame::query()
             ->where('key', $key)
@@ -25,11 +25,7 @@ class ConveyorChannel
             return false;
         }
 
-        $core = ConveyorUtils::makeCore($frame->base_key);
-            
-        if ($core->allowAccess($frame)) {
-            return $core->formatData($frame);
-        }
-        return false;
+        return ConveyorUtils::makeCore($frame->base_key)
+            ->allowAccess($frame);
     }
 }
