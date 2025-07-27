@@ -1,18 +1,18 @@
-import f from "axios";
-import h from "laravel-echo";
-class l {
-  #t;
-  #o = !1;
-  constructor(e, n, t, i = () => {
+import l from "axios";
+import f from "laravel-echo";
+class h {
+  #o;
+  #t = !1;
+  constructor(i, e, o, c = () => {
   }) {
-    if (typeof t == "function") {
-      const c = new URLSearchParams(n).toString(), r = "/conveyor/join/" + e + "?" + c;
-      f.get(r).then((o) => {
-        this.#t = o.data.channel, t(o.data.state), window.Echo.private(o.data.channel).listen(".conveyor.updated", (s) => {
-          t(s.data);
-        }), this.#o = !0;
-      }).catch((o) => {
-        typeof i != "function" && i(o);
+    if (typeof o == "function") {
+      const r = new URLSearchParams(e).toString(), s = "/conveyor/join/" + i + "?" + r;
+      l.get(s).then((n) => {
+        this.#o = n.data.channel, o(n.data.state), window.Echo.private(n.data.channel).listen(".conveyor.updated", (a) => {
+          o(a.data);
+        }), this.#t = !0;
+      }).catch((n) => {
+        typeof c != "function" && c(n);
       });
     } else
       console.log("Conveyor error: handle must be function");
@@ -21,12 +21,23 @@ class l {
    * Call to end stream
    */
   destroyed() {
-    this.#o && h.leave(this.#t);
+    this.#t && f.leave(this.#o);
   }
 }
-function d(a, e, n, t) {
-  return new l(a, e, n, t);
+function u(t, i, e, o) {
+  return new h(t, i, e, o);
 }
+const d = {
+  install(t, i) {
+    const e = (o, c, r, s) => u(o, c, r, s);
+    parseInt(t.version) > 2 ? t.provide("conveyor", e) : t.mixin({
+      methods: {
+        conveyor: e
+      }
+    });
+  }
+};
 export {
-  d as newConveyor
+  d as ConveyorVue,
+  u as conveyor
 };

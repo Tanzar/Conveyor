@@ -8,6 +8,23 @@ import { Conveyor } from "./Conveyor";
  * @param {Function} onError - handle when gets error connecting, ignored if not function
  * @returns {Conveyor}
  */
-export function newConveyor(key, params, handle, onError) {
+export function conveyor(key, params, handle, onError) {
     return new Conveyor(key, params, handle, onError);
 }
+
+export const ConveyorVue = {
+    install(app, options) {
+        const c = (key, params, handle, onError) =>
+            conveyor(key, params, handle, onError);
+
+        if (parseInt(app.version) > 2) {
+            app.provide('conveyor', c);
+        } else {
+            app.mixin({
+                methods: {
+                    conveyor: c,
+                },
+            });
+        }
+    },
+};
