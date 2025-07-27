@@ -14,6 +14,7 @@ return new class extends Migration
             $table->string('type');
             $table->string('day');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

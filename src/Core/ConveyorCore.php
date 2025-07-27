@@ -93,6 +93,7 @@ abstract class ConveyorCore
 
             $this->handle($model, $config);
         } else {
+            Cell::$currentModel = $model;
             $this->cells->removeModel($model);
         }
     }

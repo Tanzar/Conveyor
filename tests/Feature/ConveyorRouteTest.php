@@ -64,7 +64,7 @@ class ConveyorRouteTest extends TestCase
         ]));
 
         $expected = [
-            'channel' => TableExample::class . '-variant=all;',
+            'channel' => 'conveyor.' . TableExample::class . '-variant=all;',
             'state' => [
                 'rows' => [
                     [ 'key' => 'burger', 'label' => 'Burgers', 'options' => [] ],
