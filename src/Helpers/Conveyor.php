@@ -22,16 +22,8 @@ final class Conveyor
         return new ConveyorUpdateByKeyHelper($class);
     }
 
-    public static function get(string $class, array $params = []): array
+    public static function get(string $class, array $params = []): ConveyorGetHelper
     {
-        $core = ConveyorUtils::makeCore($class);
-
-        $frame = ConveyorUtils::findFrame($class, $params);
-
-        if (!$core->allowAccess($frame)) {
-            throw new UnauthorizedAccessException($class);
-        }
-        
-        return $core->formatData($frame);
+        return new ConveyorGetHelper($class, $params);
     }
 }

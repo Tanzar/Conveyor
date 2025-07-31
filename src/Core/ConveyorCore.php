@@ -12,6 +12,7 @@ use Tanzar\Conveyor\Configs\ConveyorConfigInterface;
 use Tanzar\Conveyor\Configs\ModelConfig;
 use Tanzar\Conveyor\Events\ConveyorUpdated;
 use Tanzar\Conveyor\Exceptions\InvalidCallException;
+use Tanzar\Conveyor\Exceptions\InvalidClassException;
 use Tanzar\Conveyor\Models\ConveyorFrame;
 use Tanzar\Conveyor\Params\Params;
 use Tanzar\Conveyor\Params\ParamsInitializer;
@@ -145,8 +146,6 @@ abstract class ConveyorCore
     {
         $this->params = new Params($frame->params);
 
-        $frame->load('cells');
-
         $this->cells = new Cells($frame);
 
         $this->runSetup();
@@ -157,6 +156,30 @@ abstract class ConveyorCore
     }
 
     abstract protected function format(): array;
+
+    final public function getCellModelsIds(ConveyorFrame $frame, string $modelClass, array $cellKeys): array
+    {
+        $config = $this->config->toArray();
+        if (!isset($config[$modelClass])) {
+            throw new InvalidClassException("Model $modelClass is not set in conveyor");
+        }
+
+        $this->params = new Params($frame->params);
+
+        $this->cells = new Cells($frame);
+
+        $this->runSetup();
+
+        $this->postProcessing();
+
+        $models = $this->cells->getCellModels($cellKeys);
+
+        if (!isset($models[$modelClass])) {
+            return [];
+        }
+
+        return collect($models[$modelClass])->keys()->toArray();
+    }
 
     final protected function cells(): CellsInterface
     {

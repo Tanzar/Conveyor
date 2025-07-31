@@ -4,6 +4,7 @@ namespace Tanzar\Conveyor\Cells;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Tanzar\Conveyor\Exceptions\CellNotExistException;
 use Tanzar\Conveyor\Models\ConveyorCell;
 use Tanzar\Conveyor\Models\ConveyorFrame;
 
@@ -14,13 +15,28 @@ final class Cells implements CellsInterface
 
     public function __construct(private ConveyorFrame $frame)
     {
-        $frame->loadMissing('cells');
+        $frame->load('cells');
 
         $this->cells = new Collection();
 
         foreach ($frame->cells as $frameCell) {
             $this->cells->put($frameCell->key, new Cell($frameCell));
         }
+    }
+
+    public function getCellModels(array $cellKeys): array
+    {
+        $key = $this->combineKeys($cellKeys);
+
+        $cell = $this->cells->get($key);
+
+        if ($cell === null) {
+            throw new CellNotExistException('Cell not rxist for keys: ' . implode(', ', $cellKeys));
+        }
+
+        /** @var Cell $cell */
+
+        return $cell->getModels();
     }
 
     public function get(string...$keys): CellInterface

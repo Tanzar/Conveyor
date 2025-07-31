@@ -222,4 +222,9 @@ final class Cell implements CellInterface
             $this->cell->save();
         }
     }
+
+    public function getModels(): array
+    {
+        return $this->cell->models;
+    }
 }
