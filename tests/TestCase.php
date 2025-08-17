@@ -18,6 +18,9 @@ class TestCase extends \Orchestra\Testbench\TestCase
         $second = require __DIR__ . '/../database/migrations/0000_00_00_00_00_02_create_conveyor_cells_table.php';
         $second->up();
         
+        $third = require __DIR__ . '/../database/migrations/0000_00_00_00_00_03_create_conveyor_deploy_logs_table.php';
+        $third->up();
+        
         $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
         $this->artisan('migrate', ['--database' => 'testing'])->run();
     }
