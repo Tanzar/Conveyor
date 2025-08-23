@@ -35,6 +35,24 @@ class ConveyorUtilsTest extends TestCase
         ConveyorUtils::findFrame('table', [ 'variant' => 'all' ]);
     }
 
+    public function test_find_frame_with_auto_init(): void
+    {
+        config()->set('conveyor.autoInit', true);
+
+        $frame = ConveyorUtils::findFrame(TableExample::class, [ 'variant' => 'all' ]);
+
+        $this->assertEquals(1, $frame->id);
+        $this->assertEquals(TableExample::class, $frame->base_key);
+        $this->assertEquals(TableExample::class . '-variant=all;', $frame->key);
+        
+        $this->assertDatabaseHas(ConveyorFrame::class, [
+            'key' => TableExample::class . '-variant=all;',
+            'base_key' => TableExample::class,
+            'params' => '{"variant":"all"}'
+        ]);
+    
+    }
+
     public function test_make_core(): void
     {
         config()->set('conveyor.keys', [ 'table' => TableExample::class ]);
@@ -52,5 +70,21 @@ class ConveyorUtilsTest extends TestCase
         ]);
 
         $this->assertEquals('key-user=1;group=3;', $key);
+    }
+
+    public function test_init(): void
+    {
+        ConveyorUtils::init(TableExample::class, [ 'variant' => 'all' ]);
+
+        $this->assertDatabaseHas(ConveyorFrame::class, [
+            'key' => TableExample::class . '-variant=all;',
+            'base_key' => TableExample::class,
+            'params' => '{"variant":"all"}'
+        ]);
+    
+        //Second call
+        ConveyorUtils::init(TableExample::class, [ 'variant' => 'all' ]);
+
+        $this->assertDatabaseCount(ConveyorFrame::class, 1);
     }
 }

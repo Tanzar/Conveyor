@@ -25,7 +25,42 @@ final class ConveyorUtils
         if ($frame) {
             return $frame;
         }
+
+        if (config('conveyor.autoInit')) {
+            
+            $frame = new ConveyorFrame();
+            $frame->key = $key;
+            $frame->base_key = $baseKey;
+            $frame->params = $valid;
+            $frame->save();
+
+            return $frame;
+        }
+
         throw new UninitializedConveyorException($key);
+    }
+
+    public static function init(string $baseKey, array $params): void
+    {
+        $core = self::makeCore($baseKey);
+
+        $initializer = $core->getInitializer();
+
+        $valid = $initializer->checkValidity($params);
+
+        $key =  ConveyorUtils::formKey($baseKey, $valid);
+
+        $doesntExist = ConveyorFrame::query()
+            ->where('key', $key)
+            ->doesntExist();
+
+        if ($doesntExist) {
+            $frame = new ConveyorFrame();
+            $frame->key = $key;
+            $frame->base_key = $baseKey;
+            $frame->params = $valid;
+            $frame->save();
+        }
     }
 
     public static function makeCore(string $baseKey): ConveyorCore

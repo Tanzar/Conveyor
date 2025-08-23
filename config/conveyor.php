@@ -2,7 +2,7 @@
 
 return [
     'queue' => 'default',
-    'enableStreaming' => false,
+    'autoInit' => false,
     'keys' => [
         
     ],
