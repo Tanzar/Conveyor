@@ -1,0 +1,32 @@
+<?php
+
+namespace DummyNamespace;
+
+use Tanzar\Conveyor\Configs\ConveyorConfigInterface;
+use Tanzar\Conveyor\Table\Frame\Columns;
+use Tanzar\Conveyor\Table\Frame\Rows;
+use Tanzar\Conveyor\Table\Table;
+
+class DummyClass extends Table
+{
+    public function setupRows(Rows $rows): void
+    {
+
+    }
+
+    public function setupColumns(Columns $columns): void
+    {
+
+    }
+
+    protected function setup(ConveyorConfigInterface $config): void
+    {
+
+    }
+
+    protected function format(): array
+    {
+        return [];
+    }
+
+}

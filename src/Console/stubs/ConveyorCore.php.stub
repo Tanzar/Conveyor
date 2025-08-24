@@ -1,0 +1,20 @@
+<?php
+
+namespace DummyNamespace;
+
+use Tanzar\Conveyor\Configs\ConveyorConfigInterface;
+use Tanzar\Conveyor\Core\ConveyorCore;
+
+class DummyClass extends ConveyorCore
+{
+    protected function setup(ConveyorConfigInterface $config): void
+    {
+
+    }
+
+    protected function format(): array
+    {
+        return [];
+    }
+
+}
