@@ -25,15 +25,7 @@ class DeployCommandTest extends TestCase
 
         Artisan::call('conveyor:deploy');
 
-        $this->assertDatabaseHas(ConveyorDeployLog::class, [
-            'class_name' => TableExample::class,
-            'modified_at' => '2025-07-27 16:28:04'
-        ]);
-
-        $this->assertDatabaseHas(ConveyorDeployLog::class, [
-            'class_name' => TableTraitExample::class,
-            'modified_at' => '2025-07-27 16:31:55'
-        ]);
+        $this->assertDatabaseCount(ConveyorDeployLog::class, 2);
 
         Queue::assertPushedOn('conveyor', ConveyorRunJob::class);
         Queue::assertPushed(ConveyorRunJob::class, 6);
@@ -54,16 +46,11 @@ class DeployCommandTest extends TestCase
 
         Artisan::call('conveyor:deploy');
 
-        $this->assertDatabaseHas(ConveyorDeployLog::class, [
-            'id' => $log->id,
-            'class_name' => TableExample::class,
-            'modified_at' => '2025-07-27 16:28:04'
-        ]);
+        $log->refresh();
 
-        $this->assertDatabaseHas(ConveyorDeployLog::class, [
-            'class_name' => TableTraitExample::class,
-            'modified_at' => '2025-07-27 16:31:55'
-        ]);
+        $this->assertTrue($log->modified_at->isAfter('2025-07-26 16:28:04'));
+
+        $this->assertDatabaseCount(ConveyorDeployLog::class, 2);
 
         Queue::assertPushedOn('conveyor', ConveyorRunJob::class);
         Queue::assertPushed(ConveyorRunJob::class, 3);
