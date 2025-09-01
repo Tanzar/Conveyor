@@ -41,8 +41,13 @@ class DeployCommandTest extends TestCase
 
         $log = new ConveyorDeployLog();
         $log->class_name = TableExample::class;
-        $log->modified_at = Carbon::parse('2025-07-27 16:28:04');
+        $log->modified_at = Carbon::parse('2025-07-26 16:28:04');
         $log->save();
+
+        $second = new ConveyorDeployLog();
+        $second->class_name = TableTraitExample::class;
+        $second->modified_at = now()->addHour();
+        $second->save();
 
         Artisan::call('conveyor:deploy');
 
