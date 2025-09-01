@@ -1,0 +1,1 @@
+Description of ConveyorCore class
