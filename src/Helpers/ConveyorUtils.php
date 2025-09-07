@@ -14,9 +14,9 @@ final class ConveyorUtils
     {
         $core = self::makeCore($baseKey);
 
-        $initializer = $core->getInitializer();
+        $initializer = $core->getInitializer(false);
         $valid = $initializer->checkValidity($params);
-        $key = self::formKey($baseKey, $valid);
+        $key = $initializer->formKey($valid);
 
         $frame = ConveyorFrame::query()
             ->where('key', $key)
@@ -44,11 +44,11 @@ final class ConveyorUtils
     {
         $core = self::makeCore($baseKey);
 
-        $initializer = $core->getInitializer();
+        $initializer = $core->getInitializer(true);
 
         $valid = $initializer->checkValidity($params);
 
-        $key =  ConveyorUtils::formKey($baseKey, $valid);
+        $key =  $initializer->formKey($valid);
 
         $doesntExist = ConveyorFrame::query()
             ->where('key', $key)
@@ -69,22 +69,4 @@ final class ConveyorUtils
 
         return new $class($baseKey);
     }
-
-    /**
-     * Form key from params array
-     * @param string[] $values
-     * @return string
-     */
-    public static function formKey(string $baseKey, array $values): string
-    {
-        $text = "$baseKey-";
-        foreach ($values as $key => $value) {
-            if ($value instanceof Carbon) {
-                $value = $value->format('Y-m-d-H-i-s');
-            }
-            $text .= "$key=$value;";
-        }
-        return $text;
-    }
-
 }

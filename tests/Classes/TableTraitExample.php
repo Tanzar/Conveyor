@@ -3,7 +3,6 @@
 namespace Tanzar\Conveyor\Tests\Classes;
 
 use Tanzar\Conveyor\Configs\ConveyorConfigInterface;
-use Tanzar\Conveyor\Params\Params;
 use Tanzar\Conveyor\Params\ParamsInitializer;
 use Tanzar\Conveyor\Table\Frame\Rows;
 use Tanzar\Conveyor\Table\Frame\Columns;
@@ -12,16 +11,24 @@ use Tanzar\Conveyor\Tests\Models\FoodWithTrait;
 
 class TableTraitExample extends Table
 {
-    protected function initializer(): ParamsInitializer
+    protected function rules(): array
     {
-        $initializer = new ParamsInitializer([
-            'variant' => 'required|string'
-        ]);
+        return [
+            'variant' => 'required|string',
+            'sold' => 'sometimes|string'
+        ];
+    }
+    
+    protected function ingoreForKey(): array
+    {
+        return [ 'sold' ];
+    }
+
+    protected function initializationOptions(ParamsInitializer $initializer): void
+    {
         $initializer->option([ 'variant' => 'all' ])
             ->option([ 'variant' => 'pizzas' ])
             ->option([ 'variant' => 'burgers' ]);
-
-        return $initializer;
     }
 
     public function setupRows(Rows $rows): void 

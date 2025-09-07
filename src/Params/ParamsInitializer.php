@@ -6,14 +6,20 @@ namespace Tanzar\Conveyor\Params;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Tanzar\Conveyor\Exceptions\IncorrectParamOptionsException;
-use Tanzar\Conveyor\Helpers\ConveyorUtils;
 
 final class ParamsInitializer
 {
 	private array $options = [];
 
+    /**
+     * 
+     * @param array $rules
+     * @param string[] $ignoreForKey
+     */
     public function __construct(
-        private array $rules = []
+        private string $baseKey,
+        private array $rules = [],
+        private array $ignoreForKey = [],
     ) {
 
     }
@@ -26,7 +32,7 @@ final class ParamsInitializer
     public function option(array $option): self
     {
         $values = $this->checkValidity($option);
-        $key = ConveyorUtils::formKey('', $values);
+        $key = $this->formKey($values);
 
         $this->options[$key] = $values;
         
@@ -49,6 +55,30 @@ final class ParamsInitializer
 
         return $validator->validated();
     }
+
+    
+    /**
+     * Form key from params array
+     * @param string[] $values
+     * @return string
+     */
+    public function formKey(array $values): string
+    {
+        $text = "$this->baseKey-";
+        foreach ($values as $key => $value) {
+
+            if (in_array($key, $this->ignoreForKey)) {
+                continue;
+            }
+
+            if ($value instanceof Carbon) {
+                $value = $value->format('Y-m-d-H-i-s');
+            }
+            $text .= "$key=$value;";
+        }
+        return $text;
+    }
+
 
     public function toArray(): array
     {
