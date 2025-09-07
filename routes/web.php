@@ -13,8 +13,10 @@ Route::get('conveyor/{key}', function (string $key, Request $request) {
 
 Route::get('conveyor/join/{key}', function (string $key, Request $request) {
 
+    $initializer = ConveyorUtils::makeCore($key)->getInitializer(false);
+
     return [
-        'channel' => 'conveyor.' . ConveyorUtils::formKey($key, $request->all() ?? []),
+        'channel' => 'conveyor.' . $initializer->formKey($request->all() ?? []),
         'state' => Conveyor::get($key, $request->all() ?? [])->data()
     ];
 })->name('conveyor.join');

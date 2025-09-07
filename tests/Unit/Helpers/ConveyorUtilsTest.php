@@ -62,16 +62,6 @@ class ConveyorUtilsTest extends TestCase
         $this->assertEquals(TableExample::class, $core::class);
     }
     
-    public function test_form_key(): void
-    {
-        $key = ConveyorUtils::formKey('key', [
-            'user' => 1,
-            'group' => 3
-        ]);
-
-        $this->assertEquals('key-user=1;group=3;', $key);
-    }
-
     public function test_init(): void
     {
         ConveyorUtils::init(TableExample::class, [ 'variant' => 'all' ]);

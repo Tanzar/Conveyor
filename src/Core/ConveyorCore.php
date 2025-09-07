@@ -22,7 +22,6 @@ abstract class ConveyorCore
     private ConveyorConfig $config;
     private ?Cells $cells = null;
     private Params $params;
-    private ParamsInitializer $paramsInitializer;
 
     protected int $chunk = 1000;
 
@@ -30,24 +29,46 @@ abstract class ConveyorCore
     {
         $this->config = new ConveyorConfig();
         $this->setup($this->config);
-        $this->paramsInitializer = $this->initializer();
     }
 
     abstract protected function setup(ConveyorConfigInterface $config): void;
 
-    /**
-     * Setup for conveyor initializer, used by commands to setup
-     * @return ParamsInitializer
-     */
-    protected function initializer(): ParamsInitializer
+    final public function getInitializer(bool $withOptions): ParamsInitializer
     {
-        return new ParamsInitializer();
+        $initializer = new ParamsInitializer(
+            $this->baseKey,
+            $this->rules(),
+            $this->ingoreForKey()
+        );
+
+        if ($withOptions) {
+            $this->initializationOptions($initializer);
+        }
+
+        return $initializer;
     }
 
-    final public function getInitializer(): ParamsInitializer
+    /**
+     * Parameters validation rules
+     * add all parameters you intend to use in conveyor
+     * @return array
+     */
+    protected function rules(): array
     {
-        return $this->paramsInitializer;
+        return [];
     }
+
+    /**
+     * array of keys ignored for conveyor key
+     * this values will not be used for keys in database
+     * @return string[]
+     */
+    protected function ingoreForKey(): array
+    {
+        return [];
+    }
+
+    protected function initializationOptions(ParamsInitializer $initializer): void {}
 
     final public function update(ConveyorFrame $frame, ?Model $model = null): void
     {
@@ -179,6 +200,11 @@ abstract class ConveyorCore
         }
 
         return collect($models[$modelClass])->keys()->toArray();
+    }
+
+    private function initProperties(ConveyorFrame $frame): void
+    {
+        
     }
 
     final protected function cells(): CellsInterface
