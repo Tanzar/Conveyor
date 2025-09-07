@@ -41,7 +41,7 @@ final class Cell implements CellInterface
     }
 
     /**
-     * Sets cell value to be calcualted after processing all models
+     * Sets cell value to be calculated after processing all models
      * if null is passed as parameter cell will behave like normal
      * @param mixed $handle
      * @return void

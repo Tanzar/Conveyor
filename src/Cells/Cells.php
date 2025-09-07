@@ -31,7 +31,7 @@ final class Cells implements CellsInterface
         $cell = $this->cells->get($key);
 
         if ($cell === null) {
-            throw new CellNotExistException('Cell not rxist for keys: ' . implode(', ', $cellKeys));
+            throw new CellNotExistException('Cell not exist for keys: ' . implode(', ', $cellKeys));
         }
 
         /** @var Cell $cell */

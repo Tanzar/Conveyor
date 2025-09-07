@@ -58,8 +58,8 @@ class ModelConfig implements ModelConfigInterface
     /**
      * Add query to retrieve models when recalculating or initializing conveyor
      * $build uses 2 parameters:
-     *  1) Laravels query builder
-     *  2) Tanzar\Conveyor\Params\Params, which will be passed into method by convayor to use parameters for specified conveyor
+     *  1) Laravel query builder
+     *  2) Tanzar\Conveyor\Params\Params, which will be passed into method by conveyor to use parameters for specified conveyor
      * @param callable $build - function called to build query
      * @throws InvalidBuildFunctionException
      * @return ModelConfigInterface
