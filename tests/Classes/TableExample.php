@@ -12,16 +12,24 @@ use Tanzar\Conveyor\Tests\Models\Food;
 
 class TableExample extends Table
 {
-    protected function initializer(): ParamsInitializer
+    protected function rules(): array
     {
-        $initializer = new ParamsInitializer([
-            'variant' => 'required|string'
-        ]);
+        return [
+            'variant' => 'required|string',
+            'sold' => 'sometimes|string'
+        ];
+    }
+
+    protected function ingoreForKey(): array
+    {
+        return [ 'sold' ];
+    }
+
+    protected function initializationOptions(ParamsInitializer $initializer): void
+    {
         $initializer->option([ 'variant' => 'all' ])
             ->option([ 'variant' => 'pizzas' ])
             ->option([ 'variant' => 'burgers' ]);
-
-        return $initializer;
     }
 
     public function setupRows(Rows $rows): void 

@@ -30,7 +30,7 @@ final class ConveyorInitHelper
     public function all(): void
     {
         $initializer = ConveyorUtils::makeCore($this->baseKey)
-            ->getInitializer();
+            ->getInitializer(true);
 
         foreach ($initializer->toArray() as $option) {
             $this->option($option);

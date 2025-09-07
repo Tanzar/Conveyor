@@ -19,7 +19,8 @@ class ConveyorRouteTest extends TestCase
 
         $response = $this->get(route('conveyor', [
             'key' => TableExample::class,
-            "variant" => "all"
+            "variant" => "all",
+            'sold' => 'now'
         ]));
 
         $expected = [
