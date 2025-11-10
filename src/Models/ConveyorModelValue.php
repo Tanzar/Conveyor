@@ -8,14 +8,15 @@ use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
+ * @property int $calculable_id
+ * @property string $calculable_type
  * @property int $conveyor_extractor_key_id
- * @property int $conveyor_variant_key_id
  * @property int $conveyor_cell_key_id
  * @property float $cell_value
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
-class ConveyorCell extends Model
+class ConveyorModelValue extends Model
 {
 
     protected function casts(): array
