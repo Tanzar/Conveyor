@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
         });
 
-        Schema::create('conveyor_variant_keys', function (Blueprint $table) {
+        Schema::create('conveyor_tag_keys', function (Blueprint $table) {
             $table->id();
             $table->string('name');
         });
@@ -29,7 +29,7 @@ return new class extends Migration
         Schema::create('conveyor_cells', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('conveyor_extractor_key_id');
-            $table->bigInteger('conveyor_variant_key_id');
+            $table->bigInteger('conveyor_tag_key_id');
             $table->bigInteger('conveyor_cell_key_id');
             $table->float('cell_value');
             $table->timestamps();
@@ -38,9 +38,9 @@ return new class extends Migration
                 ->references('id')
                 ->on('conveyor_extractor_keys');
 
-            $table->foreign('conveyor_variant_key_id')
+            $table->foreign('conveyor_tag_key_id')
                 ->references('id')
-                ->on('conveyor_variant_keys');
+                ->on('conveyor_tag_keys');
 
             $table->foreign('conveyor_cell_key_id')
                 ->references('id')
@@ -78,6 +78,24 @@ return new class extends Migration
                 ->on('conveyor_model_values');
         });
 
+        Schema::create('conveyor_params', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('param_value');
+        });
+
+        Schema::create('conveyor_cell_params', function (Blueprint $table) {
+            $table->bigInteger('conveyor_cells_id');
+            $table->bigInteger('conveyor_param_id');
+
+            $table->foreign('conveyor_cells_id')
+                ->references('id')
+                ->on('conveyor_cells');
+
+            $table->foreign('conveyor_param_id')
+                ->references('id')
+                ->on('conveyor_params');
+        });
     }
 
     /**
