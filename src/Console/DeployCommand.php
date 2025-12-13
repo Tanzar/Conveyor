@@ -6,7 +6,6 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use ReflectionClass;
-use Tanzar\Conveyor\Helpers\Conveyor;
 use Tanzar\Conveyor\Models\ConveyorDeployLog;
 
 class DeployCommand extends Command
@@ -59,9 +58,6 @@ class DeployCommand extends Command
         
         $now = (bool) $this->option('now');
 
-        Conveyor::init($log->class_name)->all();
-
-        Conveyor::updateByClass($log->class_name)
-                ->all(!$now);
+        //TODO update values
     }
 }
