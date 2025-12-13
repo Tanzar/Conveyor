@@ -10,14 +10,13 @@ use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
- * @property int $conveyor_extractor_key_id
- * @property int $conveyor_tag_key_id
- * @property int $conveyor_cell_key_id
+ * @property int $grinder_key_id
+ * @property int $cell_key_id
  * @property float $cell_value
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
-class ConveyorCell extends Model
+class ConveyorCellValue extends Model
 {
 
     protected function casts(): array
@@ -33,18 +32,18 @@ class ConveyorCell extends Model
         return $this->belongsTo(ConveyorCellKey::class);
     }
 
-    public function tag(): BelongsTo
+    public function grinder(): BelongsTo
     {
-        return $this->belongsTo(ConveyorTagKey::class);
-    }
-
-    public function extractor(): BelongsTo
-    {
-        return $this->belongsTo(ConveyorExtractorKey::class);
+        return $this->belongsTo(ConveyorGrinderKey::class);
     }
 
     public function params(): BelongsToMany
     {
-        return $this->belongsToMany(ConveyorParam::class, 'conveyor_cell_params');
+        return $this->belongsToMany(
+            ConveyorParam::class,
+            'conveyor_cell_params',
+            'cell_id',
+            'param_id'
+        );
     }
 }

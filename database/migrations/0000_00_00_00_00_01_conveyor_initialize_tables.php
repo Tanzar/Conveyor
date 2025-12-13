@@ -11,71 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('conveyor_extractor_keys', function (Blueprint $table) {
+        Schema::create('conveyor_grinder_keys', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-        });
-
-        Schema::create('conveyor_tag_keys', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-        });
-
-        Schema::create('conveyor_cell_keys', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-        });
-
-        Schema::create('conveyor_cells', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('conveyor_extractor_key_id');
-            $table->bigInteger('conveyor_tag_key_id');
-            $table->bigInteger('conveyor_cell_key_id');
-            $table->float('cell_value');
-            $table->timestamps();
-
-            $table->foreign('conveyor_extractor_key_id')
-                ->references('id')
-                ->on('conveyor_extractor_keys');
-
-            $table->foreign('conveyor_tag_key_id')
-                ->references('id')
-                ->on('conveyor_tag_keys');
-
-            $table->foreign('conveyor_cell_key_id')
-                ->references('id')
-                ->on('conveyor_cell_keys');
-        });
-
-        Schema::create('conveyor_model_values', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('calculable_id');
-            $table->text('calculable_type');
-            $table->bigInteger('conveyor_extractor_key_id');
-            $table->bigInteger('conveyor_cell_key_id');
-            $table->float('cell_value');
-            $table->timestamps();
-
-            $table->foreign('conveyor_extractor_key_id')
-                ->references('id')
-                ->on('conveyor_extractor_keys');
-
-            $table->foreign('conveyor_cell_key_id')
-                ->references('id')
-                ->on('conveyor_cell_keys');
-        });
-
-        Schema::create('conveyor_cell_model_values', function (Blueprint $table) {
-            $table->bigInteger('conveyor_cells_id');
-            $table->bigInteger('conveyor_model_values_id');
-
-            $table->foreign('conveyor_cells_id')
-                ->references('id')
-                ->on('conveyor_cells');
-
-            $table->foreign('conveyor_model_values_id')
-                ->references('id')
-                ->on('conveyor_model_values');
         });
 
         Schema::create('conveyor_params', function (Blueprint $table) {
@@ -84,18 +22,62 @@ return new class extends Migration
             $table->string('param_value');
         });
 
-        Schema::create('conveyor_cell_params', function (Blueprint $table) {
-            $table->bigInteger('conveyor_cells_id');
-            $table->bigInteger('conveyor_param_id');
+        Schema::create('conveyor_cell_keys', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+        });
 
-            $table->foreign('conveyor_cells_id')
+        Schema::create('conveyor_cell_values', function (Blueprint $table) {
+            $table->id();
+            $table->bigInteger('grinder_key_id');
+            $table->bigInteger('cell_key_id');
+            $table->float('cell_value');
+            $table->timestamps();
+
+            $table->foreign('grinder_key_id')
+                ->references('id')
+                ->on('conveyor_grinder_keys');
+
+            $table->foreign('cell_key_id')
+                ->references('id')
+                ->on('conveyor_cell_keys');
+        });
+
+        Schema::create('conveyor_calculable_keys', function (Blueprint $table) {
+            $table->id();
+            $table->string('model_class_name');
+        });
+
+        Schema::create('conveyor_model_values', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('calculable_id');
+            $table->unsignedBigInteger('calculable_key_id');
+            $table->bigInteger('cell_id');
+            $table->float('cell_value');
+            $table->timestamps();
+
+            $table->foreign('calculable_key_id')
+                ->references('id')
+                ->on('conveyor_calculable_keys');
+
+            $table->foreign('cell_id')
+                ->references('id')
+                ->on('conveyor_cell_values');
+        });
+
+        Schema::create('conveyor_cell_params', function (Blueprint $table) {
+            $table->bigInteger('cell_id');
+            $table->bigInteger('param_id');
+
+            $table->foreign('cells_id')
                 ->references('id')
                 ->on('conveyor_cells');
 
-            $table->foreign('conveyor_param_id')
+            $table->foreign('param_id')
                 ->references('id')
                 ->on('conveyor_params');
         });
+
     }
 
     /**

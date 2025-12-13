@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $name
  */
-class ConveyorExtractorKey extends Model
+class ConveyorGrinderKey extends Model
 {
 
 }

@@ -9,9 +9,8 @@ use Illuminate\Support\Carbon;
 /**
  * @property int $id
  * @property int $calculable_id
- * @property string $calculable_type
- * @property int $conveyor_extractor_key_id
- * @property int $conveyor_cell_key_id
+ * @property int $calculable_key_id
+ * @property int $cell_id
  * @property float $cell_value
  * @property Carbon $created_at
  * @property Carbon $updated_at
@@ -27,18 +26,13 @@ class ConveyorModelValue extends Model
         ];
     }
 
-    public function cellKey(): BelongsTo
+    public function cell(): BelongsTo
     {
-        return $this->belongsTo(ConveyorCellKey::class);
+        return $this->belongsTo(ConveyorCellValue::class);
     }
 
-    public function variant(): BelongsTo
+    public function calculableKey(): BelongsTo
     {
-        return $this->belongsTo(ConveyorVariantKey::class);
-    }
-
-    public function extractor(): BelongsTo
-    {
-        return $this->belongsTo(ConveyorExtractorKey::class);
+        return $this->belongsTo(ConveyorCalculableKey::class);
     }
 }

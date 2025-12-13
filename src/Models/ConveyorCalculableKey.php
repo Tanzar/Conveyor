@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int $id
- * @property string $name
+ * @property string $model_class_name
  */
-class ConveyorTagKey extends Model
+class ConveyorCalculableKey extends Model
 {
 
 }
