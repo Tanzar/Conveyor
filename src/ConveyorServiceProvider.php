@@ -20,12 +20,8 @@ class ConveyorServiceProvider extends PackageServiceProvider
             ->discoversMigrations()
             ->hasCommands([
                 DeployCommand::class,
-                InitConveyors::class,
-                UpdateConveyors::class,
-                MakeConveyorCommand::class,
-                MakeConveyorTableCommand::class,
             ])
-            ->hasRoutes([ 'channels', 'web' ])
+            //->hasRoutes([ 'channels', 'web' ])
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
                     ->publishConfigFile()

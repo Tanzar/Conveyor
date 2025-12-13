@@ -10,5 +10,5 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ConveyorCellKey extends Model
 {
-
+    public $timestamps = false;
 }

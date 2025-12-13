@@ -69,7 +69,7 @@ return new class extends Migration
             $table->bigInteger('cell_id');
             $table->bigInteger('param_id');
 
-            $table->foreign('cells_id')
+            $table->foreign('cell_id')
                 ->references('id')
                 ->on('conveyor_cells');
 

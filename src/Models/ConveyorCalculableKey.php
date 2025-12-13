@@ -11,4 +11,5 @@ use Illuminate\Database\Eloquent\Model;
 class ConveyorCalculableKey extends Model
 {
 
+    public $timestamps = false;
 }

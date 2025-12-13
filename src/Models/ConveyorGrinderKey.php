@@ -10,5 +10,5 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ConveyorGrinderKey extends Model
 {
-
+    public $timestamps = false;
 }
