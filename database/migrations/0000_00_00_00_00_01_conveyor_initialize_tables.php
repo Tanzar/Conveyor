@@ -78,10 +78,10 @@ return new class extends Migration
                 ->on('conveyor_params');
         });
 
-        Schema::create('conveyor_active_projectors', function (Blueprint $table) {
+        Schema::create('conveyor_active_fabricators', function (Blueprint $table) {
             $table->id();
-            $table->text('projector_key');
-            $table->text('projector_params_key');
+            $table->text('fabricator_key');
+            $table->text('fabricator_params_key');
             $table->json('current_state');
             $table->timestamps();
         });

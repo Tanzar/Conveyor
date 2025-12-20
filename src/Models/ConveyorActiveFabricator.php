@@ -7,13 +7,13 @@ use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
- * @property string $projector_key
- * @property string $projector_params_key
+ * @property string $fabricator_key
+ * @property string $fabricator_params_key
  * @property array $current_state
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
-class ConveyorActiveProjector extends Model
+class ConveyorActiveFabricator extends Model
 {
     protected $casts = [
         'current_state' => 'array',
