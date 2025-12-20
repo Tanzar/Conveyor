@@ -78,6 +78,14 @@ return new class extends Migration
                 ->on('conveyor_params');
         });
 
+        Schema::create('conveyor_active_projectors', function (Blueprint $table) {
+            $table->id();
+            $table->text('projector_key');
+            $table->text('projector_params_key');
+            $table->json('current_state');
+            $table->timestamps();
+        });
+
     }
 
     /**
@@ -85,10 +93,13 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('conveyor_extractor_keys');
-        Schema::dropIfExists('conveyor_variant_keys');
+        Schema::dropIfExists('conveyor_grinder_keys');
+        Schema::dropIfExists('conveyor_params');
         Schema::dropIfExists('conveyor_cell_keys');
-        Schema::dropIfExists('conveyor_cells');
+        Schema::dropIfExists('conveyor_cell_values');
+        Schema::dropIfExists('conveyor_calculable_keys');
         Schema::dropIfExists('conveyor_model_values');
+        Schema::dropIfExists('conveyor_cell_params');
+        Schema::dropIfExists('conveyor_active_projectors');
     }
 };
