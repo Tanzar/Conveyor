@@ -8,7 +8,7 @@ use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
- * @property int $calculable_id
+ * @property array $calculable_id
  * @property int $calculable_key_id
  * @property int $cell_id
  * @property float $cell_value
@@ -23,6 +23,7 @@ class ConveyorModelValue extends Model
         return [
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
+            'calculable_id' => 'array',
         ];
     }
 

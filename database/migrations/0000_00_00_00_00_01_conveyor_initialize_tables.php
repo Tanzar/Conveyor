@@ -50,7 +50,7 @@ return new class extends Migration
 
         Schema::create('conveyor_model_values', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('calculable_id');
+            $table->json('calculable_id');
             $table->unsignedBigInteger('calculable_key_id');
             $table->bigInteger('cell_id');
             $table->float('cell_value');
