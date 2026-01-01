@@ -17,7 +17,11 @@ final class GrinderParams
      */
     public function __construct(private array $keys)
     {
-        
+        foreach ($keys as $key) {
+            if(!is_string($key)) {
+                throw new ConveyorException('Params key is not string');
+            }
+        }
     }
 
     public function string(string $key, string $value): self

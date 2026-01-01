@@ -54,6 +54,13 @@ class GrinderParamsTest extends TestCase
         $this->assertEquals('2025-12', $values['month']);
     }
 
+    public function test_wrong_key_type(): void
+    {
+        $this->expectException(ConveyorException::class);
+
+        $params = new GrinderParams([ [ 123 ] ]);
+    }
+
     public function test_key_not_set(): void
     {
         $params = new GrinderParams([]);
