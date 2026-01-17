@@ -14,6 +14,7 @@ use Illuminate\Support\Carbon;
  * @property float $cell_value
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * @property-read ConveyorCellValue $cell
  */
 class ConveyorModelValue extends Model
 {

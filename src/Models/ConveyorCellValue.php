@@ -2,6 +2,7 @@
 
 namespace Tanzar\Conveyor\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -14,6 +15,10 @@ use Illuminate\Support\Carbon;
  * @property float $cell_value
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * @property-read ConveyorCellKey $cellKey
+ * @property-read ConveyorGrinderKey $grinder
+ * @property-read Collection<int, ConveyorParam> $params
+ * 
  */
 class ConveyorCellValue extends Model
 {
@@ -28,12 +33,12 @@ class ConveyorCellValue extends Model
 
     public function cellKey(): BelongsTo
     {
-        return $this->belongsTo(ConveyorCellKey::class);
+        return $this->belongsTo(ConveyorCellKey::class, 'cell_key_id');
     }
 
     public function grinder(): BelongsTo
     {
-        return $this->belongsTo(ConveyorGrinderKey::class);
+        return $this->belongsTo(ConveyorGrinderKey::class, 'grinder_key_id');
     }
 
     public function params(): BelongsToMany

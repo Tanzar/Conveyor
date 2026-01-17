@@ -6,7 +6,7 @@ use Illuminate\Support\Carbon;
 use Tanzar\Conveyor\Exceptions\ConveyorException;
 use Tanzar\Conveyor\Models\ConveyorParam;
 
-final class GrinderParams
+final class GrinderParams implements Params
 {
     private array $values = [];
     private array $models = [];
@@ -24,22 +24,22 @@ final class GrinderParams
         }
     }
 
-    public function string(string $key, string $value): self
+    public function string(string $key, string $value): Params
     {
         return $this->setValue($key, $value);
     }
 
-    public function int(string $key, int $value): self
+    public function int(string $key, int $value): Params
     {
         return $this->setValue($key, (string) $value);
     }
 
-    public function float(string $key, float $value): self
+    public function float(string $key, float $value): Params
     {
         return $this->setValue($key, (string) $value);
     }
 
-    public function date(string $key, Carbon $value, string $format = 'Y-m-d'): self
+    public function date(string $key, Carbon $value, string $format = 'Y-m-d'): Params
     {
         return $this->setValue($key, $value->format($format));
     }
@@ -72,6 +72,9 @@ final class GrinderParams
         return $this->values;
     }
 
+    /**
+     * @return ConveyorParam[]
+     */
     public function getModels(): array
     {
         return $this->models;
